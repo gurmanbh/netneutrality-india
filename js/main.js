@@ -8,7 +8,7 @@
 
 	var helper_functions = {
 		cleanlabel: function(unclean){
-			return unclean.toLowerCase().replace(' ','-').replace('/','-')
+			return unclean.toLowerCase().replace(' ','_').replace('/','_')
 		}
 	};
 
@@ -30,6 +30,7 @@
 		// append the list to the DOM
 
 		var state_objs = _.map(state_list, function(stateobj){ return {'state': stateobj} });
+		
 
 		state_objs.forEach(function(state){
 			_.extend(state, helper_functions);
@@ -58,7 +59,13 @@
 
 			console.log(selected_circle,selected_budget,selected_operator);
 
+			$('#telecom-map').attr('data-selected-circle', selected_circle);
+
 		});
+
+		$( "#slider1" ).slider({value:100, min: 0, max: 10000, step: 3000, slide: function( event, ui ) {
+       	 	$( "#sc-1 .figure" ).html(ui.value);}
+    	});
 
 	});
 

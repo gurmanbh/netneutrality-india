@@ -5,8 +5,6 @@
 	font-family: Roboto;
 	font-size: 25px;
 	margin: 0;
-	line-height: 25px;
-
 }
 
 #menu{
@@ -14,6 +12,10 @@
 	background-color: #E6E6E6;
 	padding: 20px;
 	padding-bottom: 50px;
+}
+
+#menu #circle .menu-title{
+    margin-top: 1.5em;
 }
 
 #menu h1 {
@@ -72,7 +74,7 @@ select {
 }
 
 #telecom-box {
-	margin-left: 37.1%;
+	margin-left: 10%;
 	margin-top: 1em;
 	width: 400px;
 	height: auto;
@@ -163,3 +165,73 @@ option {
     cursor: pointer;
 }
 
+.world{
+    width: 40%;
+    display: inline-block;
+    line-height: 70px;
+}
+
+#content{
+    text-align: center;
+    padding-top: 3em;
+}
+
+.world .figure {
+    font-size: 60px;
+}
+
+#no-nn{
+   border-right: 1px solid gray;
+}
+
+.valueslider{
+    width: 75%;
+    margin-left: 3em;
+}
+
+#telecom-map {
+    width: 500px;
+    height: auto;
+    vertical-align: -50px;
+}
+
+.telecom-divs{
+    display: inline-block;
+}
+
+/*path {
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgb(105, 104, 104);
+}*/
+#telecom-map[data-selected-circle="andhra_pradesh"] #andhra_pradesh path,
+#telecom-map[data-selected-circle="assam"] #assam path,
+#telecom-map[data-selected-circle="bihar_jharkhand"] #bihar_jharkhand path,
+#telecom-map[data-selected-circle="delhi_ncr"] #delhi_ncr path,
+#telecom-map[data-selected-circle="gujarat"] #gujarat path,
+#telecom-map[data-selected-circle="haryana"] #haryana path,
+#telecom-map[data-selected-circle="himachal_pradesh"] #himachal_pradesh path,
+#telecom-map[data-selected-circle="jammu_and_kashmir"] #jammu_and_kashmir path,
+#telecom-map[data-selected-circle="karnataka"] #karnataka path,
+#telecom-map[data-selected-circle="kerala"] #kerala path,
+#telecom-map[data-selected-circle="kolkata"] #kolkata path,
+#telecom-map[data-selected-circle="madhya_pradesh_chhattisgarh"] #madhya_pradesh_chhattisgarh path,
+#telecom-map[data-selected-circle="maharashtra_goa"] #maharashtra_goa path,
+#telecom-map[data-selected-circle="mumbai"] #mumbai path,
+#telecom-map[data-selected-circle="north_east"] #north_east path,
+#telecom-map[data-selected-circle="orissa"] #orissa path,
+#telecom-map[data-selected-circle="punjab"] #punjab path,
+#telecom-map[data-selected-circle="rajasthan"] #rajasthan path,
+#telecom-map[data-selected-circle="tamil_nadu"] #tamil_nadu path,
+#telecom-map[data-selected-circle="up_east"] #up_east path,
+#telecom-map[data-selected-circle="up_west_uttarakhand"] #up_west_uttarakhand path,
+#telecom-map[data-selected-circle="west_bengal"] #west_bengal path
+{
+    fill: #ee4224;
+}
+
+#telecom-map #india-map g:hover,{
+    fill: yellow;
+    cursor: pointer;
+
+}
