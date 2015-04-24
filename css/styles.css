@@ -1,0 +1,165 @@
+*{
+	-web-kit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: Roboto;
+	font-size: 25px;
+	margin: 0;
+	line-height: 25px;
+
+}
+
+#menu{
+	text-align: center;
+	background-color: #E6E6E6;
+	padding: 20px;
+	padding-bottom: 50px;
+}
+
+#menu h1 {
+	font-weight: 500;
+	line-height: 50px;
+	color: #454444;
+}
+
+#menu #provider-container .provider img {
+	width: 100px;
+	height: auto;
+}
+
+.provider {
+	display: inline-block;
+	margin-top: 30px;
+	margin-left: 2em;
+	margin-right: 2em;
+}
+
+#menu #provider-container #provider-box{
+	margin-left: 2em;
+	margin-bottom: 3em;
+}
+
+#menu #provider-container .provider[data-which='idea'] img {
+	width: 130px;
+	padding-bottom: 10px;
+}
+
+#menu #provider-container .provider[data-which='reliance'] img {
+	width: 170px;
+	padding-bottom: 30px;
+}
+
+#menu .menu-title {
+	margin-top: 3em;
+}
+
+select {
+    padding:15px;
+    margin: 0;
+    -webkit-border-radius:0px;
+    -moz-border-radius:0px;
+    border-radius:0px;
+    background: transparent;
+    color:black;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    font-weight: 300;
+}
+
+#telecom-box {
+	margin-left: 37.1%;
+	margin-top: 1em;
+	width: 400px;
+	height: auto;
+    overflow: hidden;
+	background: url(../img/arrow-01.png) no-repeat right white;
+}
+
+#budget-box {
+    margin-left: 42.3%;
+    margin-top: 1em;
+    width: 250px;
+    height: auto;
+    overflow: hidden;
+    background: url(../img/arrow-01.png) no-repeat right white;
+
+}
+
+#budget-box select{
+    width: 250px;
+}
+
+option {
+	margin: 0;
+    -webkit-border-radius:0px;
+    -moz-border-radius:0px;
+    border-radius:0px;
+    background: white;
+    color:black;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+    font-weight: 300;
+}
+
+.provider img{
+	-webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    filter: grayscale(100%); 
+    -moz-transition: all .2s linear;
+	-webkit-transition: all .2s linear;
+	-o-transition: all .2s linear;
+	transition: all .2s linear;
+	
+}
+
+
+.provider img:hover {
+	-webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    filter: grayscale(0%); 
+    cursor: pointer;
+}
+
+.provider.active img {
+	-webkit-filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    filter: grayscale(0%); 
+}
+
+#submit-button {
+    margin-top: 70px;
+    margin-left: 41.5%;
+    text-align: center;
+    background-color: #666666; 
+    border-radius: 5px;
+    width: 280px;
+    height: 80px;
+    color: white;
+    padding: 25px;
+}
+
+#submit-button p{
+        font-size: 30px;
+}
+
+#submit-button:hover {
+    background-color: #A0A0A0;
+    cursor: pointer;
+}
+

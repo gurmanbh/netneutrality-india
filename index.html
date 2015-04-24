@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:400,100,200,300,500,700' rel='stylesheet' type='text/css'>
+	<link href="css/styles.css" rel="stylesheet">
+	<title>Net Neutrality</title>
+</head>
+<body>
+	<div id = "canvas">
+		<div id = "menu">
+			<div id = "circle">
+				<div class = "menu-title">
+					<h1>Choose your telecom circle</h1>
+				</div>
+				<div id = 'telecom-box'>
+					<select id = 'telecom-selector'>
+					  
+					</select>
+				</div>
+			</div>
+
+			<div id = "provider-container">
+				<div class = "menu-title">
+					<h1>Choose a telecom provider</h1>
+				</div>
+				<div id = 'provider-box'>
+					<div data-which="vodafone" class = "provider"><img src ='img/vodafone.png'></div>
+					<div data-which="airtel" class = "provider"><img src ='img/airtel.png'></div>
+					<div data-which="idea" class = "provider"><img src ='img/idea.png'></div>
+					<div data-which="reliance" class = "provider"><img src ='img/reliance.png'></div>
+				</div>
+			</div>
+
+			<div id = "budget">
+				<div class = "menu-title">
+					<h1>Choose your budget</h1>
+				</div>
+				<div id = 'budget-box'>
+					<select id = 'budget-selector'>
+					  
+					</select>
+				</div>
+			</div>
+
+			<div id = 'submit-button'><p>Submit</p></div>
+
+		</div>
+	</div>
+
+	<!-- templates start here -->
+	<script type="text/jst" id="selector-template">
+		<option value = "<%= cleanlabel(state) %>"><%= state %></option>
+	</script>
+
+	<script type="text/jst" id="budget-selector-template">
+		<option value = "<%= budget %>"> Rs. <%= budget %> </option>
+	</script>
+
+	<script type="text/javascript" src="js/thirdparty/d3.v3.min.js"></script>
+	<script type="text/javascript" src="js/thirdparty/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="js/thirdparty/underscore-min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
