@@ -178,24 +178,27 @@ option{
     width: 40%;
     display: inline-block;
     line-height: 70px;
+    vertical-align: top;
 }
 
 #content{
     text-align: center;
     padding-top: 3em;
+    padding-bottom: 3em;
 }
 
 .world .figure {
     font-size: 60px;
 }
 
-#no-nn{
-   border-right: 1px solid gray;
+#yes-nn{
+   border-left: 1px solid gray;
 }
 
 .valueslider{
-    width: 75%;
-    margin-left: 3em;
+    width: 65%;
+    margin-left: 5em;
+    margin-top: 1em;
 }
 
 #telecom-map {
@@ -213,6 +216,7 @@ option{
     border-style: solid;
     border-color: rgb(105, 104, 104);
 }*/
+
 #telecom-map[data-selected-circle="andhra_pradesh"] #andhra_pradesh path,
 #telecom-map[data-selected-circle="assam"] #assam path,
 #telecom-map[data-selected-circle="bihar_jharkhand"] #bihar_jharkhand path,
@@ -236,16 +240,87 @@ option{
 #telecom-map[data-selected-circle="up_west_uttarakhand"] #up_west_uttarakhand path,
 #telecom-map[data-selected-circle="west_bengal"] #west_bengal path
 {
-    fill: #ee4224;
+    fill: #E23743;
+    /*remove the things below. at present they don't work in Chrome*/
+    stroke-width:2px;
+    stroke: #E23743;
 }
 
 g:hover * {
     fill: #ccc;
     cursor: pointer;
+    /*remove the things below. at present they don't work in Chrome*/
+    stroke-width:2px;
+    stroke: #ccc;
 }
 
 g path {
     fill: #454546;
+    /*remove the things below. at present they don't work in Chrome*/
+    stroke-width:2px;
+    stroke: #454546;
 }
 
+.ui-slider-horizontal.ui-state-default {
+    border-radius: 50%;
+}
 
+#content .ui-state-default, #content .ui-widget-content .ui-state-default, #content .ui-widget-header .ui-state-default {
+  border: none;
+  background: none; 
+  font-weight: normal;
+  color: red;
+  background-color: #C1272D;
+  border-radius: 50%;
+  vertical-align: -30px;
+}
+
+#content #no-nn .ui-state-default, #content #no-nn .ui-widget-content #no-nn .ui-state-default, #content #no-nn .ui-widget-header .ui-state-default {
+  border: none;
+  background: none; 
+  font-weight: normal;
+  color: red;
+  background-color: #C1272D;
+  border-radius: 50%;
+  vertical-align: -30px;
+}
+
+#content #yes-nn .ui-state-default, #content #yes-nn .ui-widget-content #yes-nn .ui-state-default, #content #yes-nn .ui-widget-header .ui-state-default {
+  border: none;
+  background: none; 
+  font-weight: normal;
+  color: red;
+  background-color: #23842C;
+  border-radius: 50%;
+  vertical-align: -30px;
+}
+
+#content .ui-slider-horizontal{ 
+    height: .3em; 
+    vertical-align: -30px;
+}
+
+#content .world .world-title h2{
+    font-size: 1.5em;
+    font-weight: 500;
+    padding-bottom: 1.5em;
+}
+
+#content #yes-nn .world-title{
+    color: #23842C
+}
+
+#content #no-nn .world-title{
+    color: #C1272D
+}
+
+#content .ui-widget-content {
+    border: none; 
+    background: none;
+    color: #222;
+    background-color: #ccc;
+}
+
+.scenario {
+    margin-bottom: 2.5em;
+}
