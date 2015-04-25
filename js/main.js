@@ -8,7 +8,7 @@
 
 	var helper_functions = {
 		cleanlabel: function(unclean){
-			return unclean.toLowerCase().replace(' ','_').replace('/','_')
+			return unclean.toLowerCase().replace(/ /g,'_').replace( /\//g ,'_');
 		}
 	};
 
@@ -30,7 +30,7 @@
 		// append the list to the DOM
 
 		var state_objs = _.map(state_list, function(stateobj){ return {'state': stateobj} });
-		
+
 
 		state_objs.forEach(function(state){
 			_.extend(state, helper_functions);
@@ -66,6 +66,18 @@
 		$( "#slider1" ).slider({value:100, min: 0, max: 10000, step: 3000, slide: function( event, ui ) {
        	 	$( "#sc-1 .figure" ).html(ui.value);}
     	});
+
+    	$('.state_group').on('click',function(){
+    		var selected_circle = $(this).attr('id');
+    		console.log(selected_circle);
+			$('#telecom-selector').val(selected_circle);
+			$('#telecom-map').attr('data-selected-circle', selected_circle);
+		});
+
+		$("#telecom-selector").change(function(event) {
+			var selected_circle = $('#telecom-selector').val();
+			$('#telecom-map').attr('data-selected-circle', selected_circle);
+		});
 
 	});
 

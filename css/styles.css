@@ -56,7 +56,6 @@
 }
 
 select {
-    padding:15px;
     margin: 0;
     -webkit-border-radius:0px;
     -moz-border-radius:0px;
@@ -71,21 +70,26 @@ select {
     appearance:none;
     cursor:pointer;
     font-weight: 300;
+    padding-left: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 #telecom-box {
-	margin-left: 10%;
 	margin-top: 1em;
-	width: 400px;
+	width: 460px;
 	height: auto;
     overflow: hidden;
 	background: url(../img/arrow-01.png) no-repeat right white;
+    text-align: left;
+    padding-left: 10px;
 }
 
 #budget-box {
     margin-left: 42.3%;
     margin-top: 1em;
     width: 250px;
+    padding-left: 20px;
     height: auto;
     overflow: hidden;
     background: url(../img/arrow-01.png) no-repeat right white;
@@ -96,7 +100,12 @@ select {
     width: 250px;
 }
 
-option {
+option{
+    width: 460px;
+    padding: 8px;
+}
+
+/*option {
 	margin: 0;
     -webkit-border-radius:0px;
     -moz-border-radius:0px;
@@ -111,7 +120,7 @@ option {
     appearance:none;
     cursor:pointer;
     font-weight: 300;
-}
+}*/
 
 .provider img{
 	-webkit-filter: grayscale(100%);
@@ -230,8 +239,13 @@ option {
     fill: #ee4224;
 }
 
-#telecom-map #india-map g:hover,{
-    fill: yellow;
+g:hover * {
+    fill: #ccc;
     cursor: pointer;
-
 }
+
+g path {
+    fill: #454546;
+}
+
+
