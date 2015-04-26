@@ -269,7 +269,6 @@ g path {
   border: none;
   background: none; 
   font-weight: normal;
-  color: red;
   background-color: #C1272D;
   border-radius: 50%;
   vertical-align: -30px;
@@ -279,8 +278,8 @@ g path {
   border: none;
   background: none; 
   font-weight: normal;
-  color: red;
   background-color: #C1272D;
+  cursor:ew-resize;
   border-radius: 50%;
   vertical-align: -30px;
 }
@@ -289,8 +288,8 @@ g path {
   border: none;
   background: none; 
   font-weight: normal;
-  color: red;
   background-color: #23842C;
+  cursor:ew-resize;
   border-radius: 50%;
   vertical-align: -30px;
 }

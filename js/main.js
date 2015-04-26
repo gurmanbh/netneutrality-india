@@ -30,6 +30,17 @@
 	// define the scenarios
 
 	var scenarios = [
+
+		{scenario_name:'nn-text',
+		figure:100000,
+		min:0,
+		max:500000,
+		desc:'WeChat/Hike/WhatsApp messages',
+		unit:0.001,
+		breaks:5000,
+		maxed_out:'no'
+		},
+
 		{scenario_name:'video',
 		figure:0,
 		min:0,
@@ -43,10 +54,10 @@
 		{scenario_name:'music',
 		figure:0,
 		min:0,
-		max:5000,
+		max:5200,
 		desc:'hours of Gaana/Saavn music',
 		unit:2,
-		breaks:500,
+		breaks:220,
 		maxed_out:'no'
 		},
 
@@ -58,17 +69,8 @@
 		unit:2,
 		breaks:500,
 		maxed_out:'no'
-		},
-
-		{scenario_name:'nn-text',
-		figure:0,
-		min:0,
-		max:5000,
-		desc:'WeChat/Hike/WhatsApp messages',
-		unit:2,
-		breaks:500,
-		maxed_out:'no'
 		}
+		
 
 	]
 
@@ -78,9 +80,15 @@
 	var result = _.filter(plans, function(plan){
     		return plan.operatorkey === getoperator() && plan.statekey === getcircle();
     	});
-	var mean = d3.mean(result,function(d) {return d.dataperday_beingused});
-	console.log(mean)
 	return(result);
+	}
+
+	// define the cooler math function that defines useful data here
+
+	function somemath(obj){
+		var mean = d3.mean(obj,function(d) {return d.dataperday_beingused});
+		var useful_data = mean * number_of_days;
+		return useful_data;
 	}
 
 	// define helper functions here
@@ -125,7 +133,7 @@
 			$('#budget-selector').append(budgetList_TF(budget));
 		});
 
-		// make name keys pretty and operator names look
+		// make name keys pretty and operator names lowercase
 		plans.forEach(function(plan){
 			plan.statekey = helper_functions.cleanlabel(plan.state);
 			plan.operatorkey = helper_functions.cleanlabel(plan.operator);
@@ -142,7 +150,7 @@
 		
 		$('#submit-button').on('click',function(){
 
-			// calculate monthly costs
+			// calculate costs
 			plans.forEach(function(plan){
 				plan.dataperday_beingused = plan.dataperdayperrupee * getbudget();
 			});
@@ -153,8 +161,8 @@
 			// console.log(selected_circle,selected_budget,selected_operator);
 			$('#telecom-map').attr('data-selected-circle', selected_circle);
 			var gotdata = getmydata(plans);
-
-			console.log(gotdata);
+			var useful_numbers = somemath(gotdata)
+			console.log(useful_numbers);
 
 			
 		});
@@ -166,7 +174,7 @@
 			$('#yes-nn .scenario-box').append(scenario_TF(scene));
 			$("#slider-"+scene.scenario_name).slider({value:scene.figure, min: scene.min, max: scene.max, step: scene.breaks, slide: function( event, ui ){
        	 	$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(ui.value));
-       	 	console.log(ui);
+       	 	// console.log(ui);
        	 }
     	});
 		});
