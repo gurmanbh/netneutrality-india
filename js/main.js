@@ -9,6 +9,8 @@
 	var scenario_Html = $('#scenario-template').html();
 	var scenario_TF = _.template(scenario_Html);
 
+	var append_html = '<div id = "no-nn" class = "world"><div class = "world-title"><h2>In a selective Universe</h2></div><div class = "scenario-box"><div id = "sc-1" class "scenario"><div class = "figure">10000</div><div class = "desc">hours of YouTube/Vimeo video</div><div id="slider1" class = "valueslider"></div></div></div></div><div id = "yes-nn" class = "world"><div class = "world-title"><h2>In a net neutral world</h2></div><div class="scenario-box"></div></div>'
+
 	// define some cool numbers here
 
 	var number_of_days = 7;
@@ -29,56 +31,79 @@
 
 	// define the scenarios
 
+	var total_data = 0
+
 	var scenarios = [
 
 		{scenario_name:'nn-text',
-		figure:100000,
+		figure:0,
 		min:0,
-		max:500000,
+		max:0,
 		desc:'WeChat/Hike/WhatsApp messages',
 		unit:0.001,
-		breaks:5000,
+		breaks:0,
 		maxed_out:'no'
 		},
 
 		{scenario_name:'video',
 		figure:0,
 		min:0,
-		max:5000,
-		desc:'hours of YouTube/Vimeo video',
-		unit:2,
-		breaks:500,
+		max:0,
+		desc:'minutes of YouTube/Vimeo video',
+		unit:4,
+		breaks:0,
 		maxed_out:'no'
 		},
 
 		{scenario_name:'music',
 		figure:0,
 		min:0,
-		max:5200,
-		desc:'hours of Gaana/Saavn music',
-		unit:2,
-		breaks:220,
+		max:0,
+		desc:'minutes of Gaana/Saavn music',
+		unit:0.65,
+		breaks:0,
 		maxed_out:'no'
 		},
 
 		{scenario_name:'email',
 		figure:0,
 		min:0,
-		max:5000,
+		max:0,
 		desc:'text emails',
-		unit:2,
-		breaks:500,
+		unit:0.01,
+		breaks:0,
+		maxed_out:'no'
+		},
+
+		{scenario_name:'video-call',
+		figure:0,
+		min:0,
+		max:0,
+		desc:'minutes of video calling',
+		unit:8,
+		breaks:0,
+		maxed_out:'no'
+		},
+		
+		{scenario_name:'navigation',
+		figure:0,
+		min:0,
+		max:0,
+		desc:'minutes of navigation',
+		unit:2.5,
+		breaks:0,
 		maxed_out:'no'
 		}
-		
 
 	]
+
+
 
 	// define the cool filtering function here
 
 	function getmydata(plans){
 	var result = _.filter(plans, function(plan){
-    		return plan.operatorkey === getoperator() && plan.statekey === getcircle();
+    		return plan.operatorkey === getoperator() && plan.statekey === getcircle() && plan.type==='Internet';
     	});
 	return(result);
 	}
@@ -91,13 +116,25 @@
 		return useful_data;
 	}
 
+	function impmath(){
+		scenarios.forEach(function(scene){
+			scene.max = total_data/scene.unit;
+			scene.breaks = scene.max/5;
+		})
+	}
+
 	// define helper functions here
 	var helper_functions = {
 		cleanlabel: function(unclean){
 			return unclean.toLowerCase().replace(/ /g,'_').replace( /\//g ,'_');
 		},
 		addComma: function(value){
+
 			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		},
+
+		rndnumber: function(value){
+			return value | 0
 		}
 	};
 
@@ -149,7 +186,10 @@
 		});
 		
 		$('#submit-button').on('click',function(){
+			$('#content').html('');
+			$('#content').append(append_html);
 
+			console.log('this is scenario length'+scenarios.length)
 			// calculate costs
 			plans.forEach(function(plan){
 				plan.dataperday_beingused = plan.dataperdayperrupee * getbudget();
@@ -161,26 +201,31 @@
 			// console.log(selected_circle,selected_budget,selected_operator);
 			$('#telecom-map').attr('data-selected-circle', selected_circle);
 			var gotdata = getmydata(plans);
-			var useful_numbers = somemath(gotdata)
-			console.log(useful_numbers);
+			total_data = somemath(gotdata);
+			console.log(total_data);
+			impmath();
 
+			//bake out scenarios here
+
+			scenarios.forEach(function(scene){
+				_.extend(scene, helper_functions);
+				$('#yes-nn .scenario-box').append(scenario_TF(scene));
+				$("#slider-"+scene.scenario_name).slider({value:scene.figure, min: scene.min, max: scene.max, step: scene.breaks, slide: function( event, ui ){
+					var round = helper_functions.rndnumber(ui.value);
+	       	 	$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
+	       	 	// console.log(ui);
+	       	 		}
+	    		});
+			});
 			
 		});
 
-		//bake out scenarios here
-
-		scenarios.forEach(function(scene){
-			_.extend(scene, helper_functions);
-			$('#yes-nn .scenario-box').append(scenario_TF(scene));
-			$("#slider-"+scene.scenario_name).slider({value:scene.figure, min: scene.min, max: scene.max, step: scene.breaks, slide: function( event, ui ){
-       	 	$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(ui.value));
-       	 	// console.log(ui);
-       	 }
-    	});
-		});
+		
 
 		$( "#slider1" ).slider({value:100, min: 0, max: 10000, step: 3000, slide: function( event, ui ) {
-       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma(ui.value));}
+			var k = helper_functions.rndnumber(ui.value);
+			console.log (k)
+       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma());}
     	});
 
     	// this updates the selector value when the user clicks on a certain state on the map

@@ -197,7 +197,7 @@ option{
 
 .valueslider{
     width: 65%;
-    margin-left: 5em;
+    margin-left: 18%;
     margin-top: 1em;
 }
 
@@ -274,24 +274,27 @@ g path {
   vertical-align: -30px;
 }
 
-#content #no-nn .ui-state-default, #content #no-nn .ui-widget-content #no-nn .ui-state-default, #content #no-nn .ui-widget-header .ui-state-default {
+#content .ui-state-default, #content .ui-widget-content .ui-state-default, #content .ui-widget-header .ui-state-default {
   border: none;
   background: none; 
   font-weight: normal;
-  background-color: #C1272D;
-  cursor:ew-resize;
+  cursor:pointer;
   border-radius: 50%;
   vertical-align: -30px;
+  transition: all .2s ease-in-out; 
+  transform: scale(0.8);
+}
+
+#content #no-nn .ui-state-default, #content #no-nn .ui-widget-content .ui-state-default, #content #no-nn .ui-widget-header .ui-state-default {
+  background-color: #C1272D;
 }
 
 #content #yes-nn .ui-state-default, #content #yes-nn .ui-widget-content #yes-nn .ui-state-default, #content #yes-nn .ui-widget-header .ui-state-default {
-  border: none;
-  background: none; 
-  font-weight: normal;
   background-color: #23842C;
-  cursor:ew-resize;
-  border-radius: 50%;
-  vertical-align: -30px;
+}
+
+#content .ui-state-default:hover, #content .ui-widget-content .ui-state-default:hover, #content .ui-widget-header .ui-state-default:hover { 
+    transform: scale(1.1);
 }
 
 #content .ui-slider-horizontal{ 

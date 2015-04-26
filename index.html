@@ -6541,7 +6541,7 @@
 
 			<div id = "budget">
 				<div class = "menu-title">
-					<h1>Choose your weekly budget</h1>
+					<h1>Choose your weekly budget for mobile Internet</h1>
 				</div>
 				<div id = 'budget-box'>
 					<select id = 'budget-selector'>
@@ -6555,41 +6555,19 @@
 		</div>
 
 		<div id = "content">
-			<div id = "no-nn" class = 'world'>
-				<div class = "world-title">
-					<h2>In a selective Universe</h2>
-				</div>
-				<div class = 'scenario-box'>
-					<div id = "sc-1" class "scenario">
-						<div class = "figure">10000</div>
-						<div class = "desc">hours of YouTube/Vimeo video</div>
-						<div id="slider1" class = 'valueslider'></div>
-					</div>
-				</div>
-			</div>
-
-			<div id = "yes-nn" class = "world">
-				<div class = "world-title">
-					<h2>In a net neutral world</h2>
-				</div>
-				<div class="scenario-box">
-					<!-- <div id = "sc-2" class "scenario">
-						<div class = "figure">10000</div>
-						<div class = "desc">hours of YouTube/Vimeo video</div>
-						<div id="slider2" class = 'valueslider'></div>
-					</div> -->
-				</div>
-			</div>
+			
 		</div>
 	</div>
 
 	<!-- templates start here -->
 	<script type="text/jst" id="selector-template">
-		<option value = "<%= cleanlabel(state) %>"><%= state %></option>
+		<option value = "<%= cleanlabel(state) %>"><%= state %>
+		</option>
 	</script>
 
 	<script type="text/jst" id="budget-selector-template">
-		<option value = "<%= budget %>"> Rs. <%= budget %> </option>
+		<option value = "<%= budget %>"> Rs. <%= budget %> 
+		</option>
 	</script>
 
 	<script type="text/jst" id ="scenario-template">
