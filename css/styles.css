@@ -20,8 +20,12 @@
     height: 70px;
     background-color: #666666; 
     color: white;
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 5px;
+}
+
+.sc-button.active{
+    background-color: #C1272D;
 }
 
 .sc-button:hover{
@@ -209,7 +213,7 @@ option{
     text-align: center;
     padding-top: 3em;
     padding-bottom: 3em;
-    /*display: none;*/
+    display: none;
 }
 
 #content.show{

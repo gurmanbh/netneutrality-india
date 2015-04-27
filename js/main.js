@@ -84,15 +84,15 @@
 		maxed_out:'no'
 		},
 
-		{scenario_name:'video-call',
-		figure:0,
-		min:0,
-		max:0,
-		desc:'minutes of video calling',
-		unit:8,
-		breaks:0,
-		maxed_out:'no'
-		},
+		// {scenario_name:'video-call',
+		// figure:0,
+		// min:0,
+		// max:0,
+		// desc:'minutes of video calling',
+		// unit:8,
+		// breaks:0,
+		// maxed_out:'no'
+		// },
 		
 		{scenario_name:'navigation',
 		figure:0,
@@ -206,12 +206,26 @@
 			var whichprovider = $(this).attr('data-which')
 			$('#provider-box').attr('data-selected-provider', whichprovider)
 		});
+
+		// active states for button here
+
+		$('.sc-button').on('click', function(){
+			if ($(this).hasClass('active')){
+				$(this).removeClass('active');
+			}
+			else{
+				$(this).addClass('active');
+			}
+		})
+
+		// things that happen after the submit button is clicked
 		
 		$('#submit-button').on('click',function(){
 			$('#yes-nn .scenario-box').html('')
 			$('#content').addClass('show');
 
 			console.log('this is scenario length'+scenarios.length)
+
 			// calculate costs
 			plans.forEach(function(plan){
 				plan.dataperday_beingused = plan.dataperdayperrupee * getbudget();
@@ -220,6 +234,7 @@
 			var selected_circle = getcircle();
 			var selected_budget = getbudget();
 			var selected_operator = getoperator();
+
 			// console.log(selected_circle,selected_budget,selected_operator);
 			$('#telecom-map').attr('data-selected-circle', selected_circle);
 			var gotdata = getmydata(plans);
@@ -242,6 +257,8 @@
 	       	 		}
 	    		});
 			});
+
+			// non-neutral math here
 
 			non_netneutral.max = no_nn_total_data/non_netneutral.unit;
 			non_netneutral.breaks = non_netneutral.max/8
