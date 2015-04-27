@@ -9,8 +9,6 @@
 	var scenario_Html = $('#scenario-template').html();
 	var scenario_TF = _.template(scenario_Html);
 
-	var append_html = '<div id = "no-nn" class = "world"><div class = "world-title"><h2>In a selective Universe</h2></div><div class = "scenario-box"><div id = "sc-1" class "scenario"><div class = "figure">10000</div><div class = "desc">hours of YouTube/Vimeo video</div><div id="slider1" class = "valueslider"></div></div></div></div><div id = "yes-nn" class = "world"><div class = "world-title"><h2>In a net neutral world</h2></div><div class="scenario-box"></div></div>'
-
 	// define some cool numbers here
 
 	var number_of_days = 7;
@@ -31,7 +29,18 @@
 
 	// define the scenarios
 
-	var total_data = 0
+	var nn_total_data = 0
+	var no_nn_total_data = 0
+
+	var non_netneutral = {scenario_name:'text',
+		figure:0,
+		min:0,
+		max:0,
+		desc:'WhatsApp text messages',
+		unit:0.001,
+		breaks:0,
+		maxed_out:'no'
+		}
 
 	var scenarios = [
 
@@ -39,7 +48,7 @@
 		figure:0,
 		min:0,
 		max:0,
-		desc:'WeChat/Hike/WhatsApp messages',
+		desc:'WeChat/Hike/WhatsApp text messages',
 		unit:0.001,
 		breaks:0,
 		maxed_out:'no'
@@ -99,11 +108,25 @@
 
 
 
-	// define the cool filtering function here
+	// define the cool filtering functions here
 
 	function getmydata(plans){
 	var result = _.filter(plans, function(plan){
-    		return plan.operatorkey === getoperator() && plan.statekey === getcircle() && plan.type==='Internet';
+    		return plan.operatorkey === getoperator() && plan.statekey === getcircle();
+    	});
+	return(result);
+	}
+
+	function getInternet(plans){
+		var result = _.filter(plans, function(plan){
+    		return plan.type==='Internet';
+    	});
+	return(result);
+	}
+
+	function getWA(plans){
+		var result = _.filter(plans, function(plan){
+    		return plan.type==='WA';
     	});
 	return(result);
 	}
@@ -118,8 +141,8 @@
 
 	function impmath(){
 		scenarios.forEach(function(scene){
-			scene.max = total_data/scene.unit;
-			scene.breaks = scene.max/5;
+			scene.max = nn_total_data/scene.unit;
+			scene.breaks = scene.max/8;
 		})
 	}
 
@@ -158,7 +181,6 @@
 
 		var state_objs = _.map(state_list, function(stateobj){return {'state': stateobj} });
 
-
 		state_objs.forEach(function(state){
 			_.extend(state, helper_functions);
 			$('#telecom-selector').append(telecomList_TF(state));
@@ -186,8 +208,8 @@
 		});
 		
 		$('#submit-button').on('click',function(){
-			$('#content').html('');
-			$('#content').append(append_html);
+			$('#yes-nn .scenario-box').html('')
+			$('#content').addClass('show');
 
 			console.log('this is scenario length'+scenarios.length)
 			// calculate costs
@@ -201,8 +223,11 @@
 			// console.log(selected_circle,selected_budget,selected_operator);
 			$('#telecom-map').attr('data-selected-circle', selected_circle);
 			var gotdata = getmydata(plans);
-			total_data = somemath(gotdata);
-			console.log(total_data);
+			var indata = getInternet(gotdata);
+			nn_total_data = somemath(gotdata);
+			var wadata = getWA(gotdata);
+			no_nn_total_data = somemath (wadata);
+			console.log(nn_total_data, ' ', wadata);
 			impmath();
 
 			//bake out scenarios here
@@ -217,16 +242,20 @@
 	       	 		}
 	    		});
 			});
+
+			non_netneutral.max = no_nn_total_data/non_netneutral.unit;
+			non_netneutral.breaks = non_netneutral.max/8
+			console.log(non_netneutral)
+		
+			$( "#slider1" ).slider({value:0, min: 0, max: non_netneutral.max, step: non_netneutral.breaks , slide: function( event, ui ) {
+				var round = helper_functions.rndnumber(ui.value);
+	       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma(round));}
+	    	});
 			
 		});
 
 		
 
-		$( "#slider1" ).slider({value:100, min: 0, max: 10000, step: 3000, slide: function( event, ui ) {
-			var k = helper_functions.rndnumber(ui.value);
-			console.log (k)
-       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma());}
-    	});
 
     	// this updates the selector value when the user clicks on a certain state on the map
 

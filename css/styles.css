@@ -14,6 +14,25 @@
 	padding-bottom: 50px;
 }
 
+.sc-button {
+    display: inline-block;
+    width: 150px;
+    height: 70px;
+    background-color: #666666; 
+    color: white;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.sc-button:hover{
+    background-color: #C1272D;
+    cursor: pointer;
+}
+
+#sc-type{
+    margin-bottom: 2em;
+}
+
 #menu #circle .menu-title{
     margin-top: 1.5em;
 }
@@ -86,9 +105,9 @@ select {
 }
 
 #budget-box {
-    margin-left: 42.3%;
+    margin-left: 41%;
     margin-top: 1em;
-    width: 250px;
+    width: 300px;
     padding-left: 20px;
     height: auto;
     overflow: hidden;
@@ -97,12 +116,16 @@ select {
 }
 
 #budget-box select{
-    width: 250px;
+    width: 300px;
 }
 
 option{
     width: 460px;
     padding: 8px;
+}
+
+.error{
+    color: red
 }
 
 /*option {
@@ -128,10 +151,10 @@ option{
     -o-filter: grayscale(100%);
     -ms-filter: grayscale(100%);
     filter: grayscale(100%); 
-    -moz-transition: all .2s linear;
-	-webkit-transition: all .2s linear;
-	-o-transition: all .2s linear;
-	transition: all .2s linear;
+    -moz-transition: all .25s linear;
+	-webkit-transition: all .25s linear;
+	-o-transition: all .25s linear;
+	transition: transform .25s linear;
 	
 }
 
@@ -143,6 +166,7 @@ option{
     -ms-filter: grayscale(0%);
     filter: grayscale(0%); 
     cursor: pointer;
+    transform: scale(1.1);
 }
 
 .provider.active img {
@@ -185,6 +209,11 @@ option{
     text-align: center;
     padding-top: 3em;
     padding-bottom: 3em;
+    /*display: none;*/
+}
+
+#content.show{
+    display: block;
 }
 
 .world .figure {
@@ -308,11 +337,11 @@ g path {
     padding-bottom: 1.5em;
 }
 
-#content #yes-nn .world-title{
+#content #yes-nn .world-title h2{
     color: #23842C
 }
 
-#content #no-nn .world-title{
+#content #no-nn .world-title h2{
     color: #C1272D
 }
 
