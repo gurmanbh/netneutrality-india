@@ -1,4 +1,7 @@
 (function(){
+	$.getJSON( "data/data.json", function( data ) {
+	console.log(data)
+	});
 	// define templates here
 	var telecomlist_Html = $('#selector-template').html();
 	var telecomList_TF = _.template(telecomlist_Html);
