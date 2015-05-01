@@ -11,11 +11,14 @@
 	var scenario_Html = $('#scenario-template').html();
 	var scenario_TF = _.template(scenario_Html);
 
+	var menu_status = {
+		provider = "null",
+		budget = "null",
+		circle = "null"
+	}
+
 	function missingdata(){
-		var whatprovider = getoperator();
-		var whatbudget = getbudget();
-		var whatstate = getcircle();
-		if (whatstate === "null" || whatbudget=== "null" || whatprovider=== "null"){
+		if (menu_status.provider === "null" || menu_status.budget=== "null" || menu_status.circle === "null"){
 			return true
 		}
 	}
@@ -141,24 +144,32 @@
 
 	// define the cool filtering functions here
 
+	// getmydata filters on the basis of state and provider
+
 	function getmydata(plans){
 		var result = _.filter(plans, function(plan){
-	    		return plan.operatorkey === getoperator() && plan.statekey === getcircle();
+	    		return plan.operatorkey === menu_status.provider && plan.statekey === menu_status.circle;
 	    	});
 		return(result);
 	}
 
+
+
 	function getInternet(plans){
 		var result = _.filter(plans, function(plan){
-    		return plan.internet>0;
+    		return (plan.internet>0 && (plan.facebook==='unlimited' || plan.twitter==='unlimited' || plan.whatsapp==='unlimited')) || type = 'Internet';
     	})
 		return(result);
 	}
 	
 
-	function getWA(plans){
+	function getNonNN(plans){
+		var checklist 
 		var result = _.filter(plans, function(plan){
-    		return plan.whatsapp>0;
+			var entrance_services_at_least_one_of_our_selected_lines = _.some(active_lines, function(line){
+        return _.contains(entrance.lines, line)
+    });
+    		return _.contains (plan.typelist, 
     	});
 	return(result);
 	}
@@ -254,21 +265,22 @@
 				$('#yes-nn .scenario-box').html('')
 				$('#content').addClass('show');
 
-				console.log('this is scenario length'+scenarios.length)
-
 				// calculate costs
-				plans.forEach(function(plan){
-					plan.dataperday_beingused = plan.dataperdayperrupee * getbudget();
-				});
+				// plans.forEach(function(plan){
+				// 	plan.dataperday_beingused = plan.dataperdayperrupee * getbudget();
+				// });
 
-				var selected_circle = getcircle();
-				var selected_budget = getbudget();
-				var selected_operator = getoperator();
+				menu_status.circle = getcircle();
+				menu_status.budget = getbudget();
+				menu_status.provider = getoperator();
 
 				// console.log(selected_circle,selected_budget,selected_operator);
-				$('#telecom-map').attr('data-selected-circle', selected_circle);
+				$('#telecom-map').attr('data-selected-circle', menu_status.circle);
+
 				var gotdata = getmydata(plans);
+
 				var indata = getInternet(gotdata);
+
 				nn_total_data = somemath(gotdata);
 				var wadata = getWA(gotdata);
 				no_nn_total_data = somemath (wadata);
