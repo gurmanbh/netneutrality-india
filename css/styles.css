@@ -6,6 +6,12 @@
 	margin: 0;
 }
 
+#sc-type h2{
+    line-height: 1em; 
+    font-size: 1.2em;
+    font-weight: 300;
+}
+
 #menu{
     padding-top: 2em;
 	text-align: center;

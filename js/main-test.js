@@ -175,7 +175,7 @@
 
 	function getInternet(plans){
 		var result = _.filter(plans, function(plan){
-    		return (plan.internet>0 && (plan.facebook==='unlimited' || plan.twitter==='unlimited' || plan.whatsapp==='unlimited')) || (type = 'Internet');
+    		return plan.typelist == 'Internet';
     	})
 		return(result);
 	}
@@ -184,8 +184,11 @@
 
 	function getNonNN(plans){
 		var checklist = ['Unlimited-WA','Unlimited-FB','Unlimited-TW','FB','TW','WA'];
-		var result = _.some(checklist, function(obj){
-        		return _.contains(plans.typelist, obj)
+		var result = _.filter(plans, function(plan){
+        		var checked = _.some(checklist, function(check){
+        			return _.contains (plan.typelist, check)
+        		});
+        		return checked
     		});
 	return(result);
 	}
@@ -210,7 +213,7 @@
 
 	function calculateuseddata() {
 		slider_totals.yes_nn.total = d3.sum(scenarios, function(d) { return d.data_used; });
-		console.log(slider_totals.yes_nn.total)
+		console.log('calculateuseddata looks like this', slider_totals.yes_nn.total)
 	}
 
 	// define helper functions here
@@ -267,13 +270,13 @@
 			plan.statekey = helper_functions.cleanlabel(plan.state);
 			plan.operatorkey = helper_functions.cleanlabel(plan.operator);
 			plan.dataperdayperrupee = (plan.total_data/plan.validity)/plan.cost;
-			if ( plan.type.indexOf('/') >=0 ){
-				plan.typelist = plan.type.split('/');
+			plan.typelist = plan.type.split('/');
 			// console.log(plan)
 				
-			} else {
+			if (!plan.typelist){
 				plan.typelist = plan.type;
 			}
+
 		});
 
 		// things that happen after the submit button is clicked
@@ -305,16 +308,23 @@
 				$('#telecom-map').attr('data-selected-circle', menu_status.circle);
 
 				var gotdata = getmydata(plans);
-
 				var indata = getInternet(gotdata);
-				// console.log(indata)
 				var nonndata = getNonNN(gotdata);
 
 				slider_totals.yes_nn.total = somemath(indata);
-				slider_totals.no_nn.total = somemath (nonndata);
+
+				if (nonndata.length>0){
+					slider_totals.no_nn.total = somemath (nonndata);
+				} else{
+					slider_totals.no_nn.total = 'nodata';
+				}
+				console.log(slider_totals.no_nn.total)
+
 				impmath();
 
-				
+				if (slider_totals.no_nn.total === 'nodata'){
+					$('#sc-type').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone</h2>')
+				}
 
 				// function to hook up with backbone
 
@@ -336,8 +346,7 @@
 				// non-neutral math here
 
 				non_netneutral.max = slider_totals.no_nn.total/non_netneutral.unit;
-				non_netneutral.breaks = non_netneutral.max/number_of_breaks
-				// console.log(non_netneutral)
+				non_netneutral.breaks = non_netneutral.max/number_of_breaks;
 			
 				$( "#slider1" ).slider({value:0, min: 0, max: non_netneutral.max, step: non_netneutral.breaks , slide: function( event, ui ) {
 					var round = helper_functions.rndnumber(ui.value);
