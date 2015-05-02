@@ -11,11 +11,37 @@
 	var scenario_Html = $('#scenario-template').html();
 	var scenario_TF = _.template(scenario_Html);
 
+	var nn_buttons_Html = $('#nn-button-template').html();
+	var nn_buttons_TF = _.template(nn_buttons_Html);
+
+	// keeps track of the items submitted via the menu
+
 	var menu_status = {
-		provider = "null",
-		budget = "null",
-		circle = "null"
+		provider: "null",
+		budget:"null",
+		circle: "null"
 	}
+
+	// keeps track of the slider status. 
+
+	var slider_totals = {
+
+		yes_nn:{total: 0,
+			used:0,
+			left:0,
+			percentage_used:0,
+			percentage_left:0
+		},
+
+		no_nn:{total: 0,
+			used:0,
+			left:0,
+			percentage_used:0,
+			percentage_left:0
+		}
+	}
+
+	// checks for missing data via the menu submission. Is called when the user clicks on submit. If there is missing data, an error is thrown.
 
 	function missingdata(){
 		if (menu_status.provider === "null" || menu_status.budget=== "null" || menu_status.circle === "null"){
@@ -46,7 +72,7 @@
 	// define some cool numbers here
 
 	var number_of_days = 7;
-	var number_of_breaks = 8
+	var number_of_breaks = 8;
 
 	// imp functions that we use again and again
 
@@ -63,9 +89,6 @@
 	}
 
 	// define the scenarios
-
-	var nn_total_data = 0;
-	var no_nn_total_data = 0;
 
 	var non_netneutral = {scenario_name:'text',
 		figure:0,
@@ -86,7 +109,8 @@
 		desc:'WeChat/Hike/WhatsApp text messages',
 		unit:0.001,
 		breaks:0,
-		maxed_out:'no'
+		maxed_out:'no',
+		data_used:0
 		},
 
 		{scenario_name:'video',
@@ -96,7 +120,8 @@
 		desc:'minutes of YouTube/Vimeo video',
 		unit:4,
 		breaks:0,
-		maxed_out:'no'
+		maxed_out:'no',
+		data_used:0
 		},
 
 		{scenario_name:'music',
@@ -106,7 +131,8 @@
 		desc:'minutes of Gaana/Saavn music',
 		unit:0.65,
 		breaks:0,
-		maxed_out:'no'
+		maxed_out:'no',
+		data_used:0
 		},
 
 		{scenario_name:'email',
@@ -116,18 +142,9 @@
 		desc:'text emails',
 		unit:0.01,
 		breaks:0,
-		maxed_out:'no'
+		maxed_out:'no',
+		data_used:0
 		},
-
-		// {scenario_name:'video-call',
-		// figure:0,
-		// min:0,
-		// max:0,
-		// desc:'minutes of video calling',
-		// unit:8,
-		// breaks:0,
-		// maxed_out:'no'
-		// },
 		
 		{scenario_name:'navigation',
 		figure:0,
@@ -136,10 +153,11 @@
 		desc:'minutes of navigation',
 		unit:2.5,
 		breaks:0,
-		maxed_out:'no'
+		maxed_out:'no',
+		data_used:0
 		}
 
-	]
+	];
 
 
 	// define the cool filtering functions here
@@ -153,24 +171,22 @@
 		return(result);
 	}
 
-
+	// getInternet returns net neutral plans
 
 	function getInternet(plans){
 		var result = _.filter(plans, function(plan){
-    		return (plan.internet>0 && (plan.facebook==='unlimited' || plan.twitter==='unlimited' || plan.whatsapp==='unlimited')) || type = 'Internet';
+    		return (plan.internet>0 && (plan.facebook==='unlimited' || plan.twitter==='unlimited' || plan.whatsapp==='unlimited')) || (type = 'Internet');
     	})
 		return(result);
 	}
 	
+	// getNonNN returns non net neutral plans. It uses underscore's _.some function to check if our type list has anything in common with the checklist defined below.
 
 	function getNonNN(plans){
-		var checklist 
-		var result = _.filter(plans, function(plan){
-			var entrance_services_at_least_one_of_our_selected_lines = _.some(active_lines, function(line){
-        return _.contains(entrance.lines, line)
-    });
-    		return _.contains (plan.typelist, 
-    	});
+		var checklist = ['Unlimited-WA','Unlimited-FB','Unlimited-TW','FB','TW','WA'];
+		var result = _.some(checklist, function(obj){
+        		return _.contains(plans.typelist, obj)
+    		});
 	return(result);
 	}
 
@@ -184,9 +200,17 @@
 
 	function impmath(){
 		scenarios.forEach(function(scene){
-			scene.max = nn_total_data/scene.unit;
+			scene.max = slider_totals.yes_nn.total/scene.unit;
 			scene.breaks = scene.max/number_of_breaks;
+			// console.log(scene);
 		});
+	}
+
+	// function to calculate total used data
+
+	function calculateuseddata() {
+		slider_totals.yes_nn.total = d3.sum(scenarios, function(d) { return d.data_used; });
+		console.log(slider_totals.yes_nn.total)
 	}
 
 	// define helper functions here
@@ -238,14 +262,14 @@
 			$('#budget-selector').append(budgetList_TF(budget));
 		});
 
-		// make name keys pretty and operator names lowercase. Calculate bits/day/rupee
+		// make name keys pretty and operator names lowercase. Calculate bits/day/rupee, create an obj typelist from type separated by /.
 		plans.forEach(function(plan){
 			plan.statekey = helper_functions.cleanlabel(plan.state);
 			plan.operatorkey = helper_functions.cleanlabel(plan.operator);
 			plan.dataperdayperrupee = (plan.total_data/plan.validity)/plan.cost;
 			if ( plan.type.indexOf('/') >=0 ){
 				plan.typelist = plan.type.split('/');
-			console.log(plan)
+			// console.log(plan)
 				
 			} else {
 				plan.typelist = plan.type;
@@ -256,54 +280,64 @@
 		
 		$('#submit-button').on('click',function(){
 
+			// first feed in the form data to the menu object
+
+			menu_status.circle = getcircle();
+			menu_status.budget = getbudget();
+			menu_status.provider = getoperator();
+
+			// check for missing data
+
 			if (missingdata()){
 				alert('Missing Data. Try again!')
 			} 
 
 			else {
 			
-				$('#yes-nn .scenario-box').html('')
+				$('.scenario-box').html('')
 				$('#content').addClass('show');
 
 				// calculate costs
-				// plans.forEach(function(plan){
-				// 	plan.dataperday_beingused = plan.dataperdayperrupee * getbudget();
-				// });
+				plans.forEach(function(plan){
+					plan.dataperday_beingused = plan.dataperdayperrupee * menu_status.budget;
+				});
 
-				menu_status.circle = getcircle();
-				menu_status.budget = getbudget();
-				menu_status.provider = getoperator();
-
-				// console.log(selected_circle,selected_budget,selected_operator);
 				$('#telecom-map').attr('data-selected-circle', menu_status.circle);
 
 				var gotdata = getmydata(plans);
 
 				var indata = getInternet(gotdata);
+				// console.log(indata)
+				var nonndata = getNonNN(gotdata);
 
-				nn_total_data = somemath(gotdata);
-				var wadata = getWA(gotdata);
-				no_nn_total_data = somemath (wadata);
+				slider_totals.yes_nn.total = somemath(indata);
+				slider_totals.no_nn.total = somemath (nonndata);
 				impmath();
+
+				
+
+				// function to hook up with backbone
 
 				//bake out scenarios here
 
 				scenarios.forEach(function(scene){
+					// console.log(scene)
 					_.extend(scene, helper_functions);
 					$('#yes-nn .scenario-box').append(scenario_TF(scene));
 					$("#slider-"+scene.scenario_name).slider({value:scene.figure, min: scene.min, max: scene.max, step: scene.breaks, slide: function( event, ui ){
-						var round = helper_functions.rndnumber(ui.value);
-		       	 	$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
-		       	 	// console.log(ui);
+							var round = helper_functions.rndnumber(ui.value);
+			       	 		$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
+			       	 		scene.data_used=ui.value * scene.unit;
+		       	 			// calculateuseddata();
 		       	 		}
 		    		});
 				});
 
 				// non-neutral math here
 
-				non_netneutral.max = no_nn_total_data/non_netneutral.unit;
+				non_netneutral.max = slider_totals.no_nn.total/non_netneutral.unit;
 				non_netneutral.breaks = non_netneutral.max/number_of_breaks
-				console.log(non_netneutral)
+				// console.log(non_netneutral)
 			
 				$( "#slider1" ).slider({value:0, min: 0, max: non_netneutral.max, step: non_netneutral.breaks , slide: function( event, ui ) {
 					var round = helper_functions.rndnumber(ui.value);

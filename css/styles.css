@@ -3,25 +3,42 @@
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	font-family: Roboto;
-	font-size: 25px;
 	margin: 0;
 }
 
 #menu{
+    padding-top: 2em;
 	text-align: center;
 	background-color: #E6E6E6;
-	padding: 20px;
-	padding-bottom: 50px;
+	/*padding: 20px;*/
+	padding-bottom: 3em;
+}
+
+.menu-block{
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 0.1em;
+}
+
+#headline {
+    background-color: #666666;
+}
+
+#headline h1{
+    font-size: 2.5em;
+    color: #E6E6E6;
+    font-weight: 400;
+    text-align: center;
+    padding: 2em;
 }
 
 .sc-button {
     display: inline-block;
-    width: 150px;
-    height: 70px;
+    width: 150px; /*come back to fix pxs*/ 
+    height: 70px; /*come back to fix pxs*/
     background-color: #666666; 
     color: white;
-    border-radius: 5px;
-    margin: 5px;
+    border-radius: 5px; /*come back to fix pxs*/
 }
 
 .sc-button.active{
@@ -43,35 +60,40 @@
 
 #menu h1 {
 	font-weight: 500;
-	line-height: 50px;
+	line-height: 1.4em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    font-size: 1.5em;
 	color: #454444;
 }
 
 #menu #provider-container .provider img {
-	width: 100px;
+	width: 6em;
 	height: auto;
 }
 
 .provider {
 	display: inline-block;
-	margin-top: 30px;
-	margin-left: 2em;
-	margin-right: 2em;
+	margin-top: 2.5em;
+	margin-left: 2.5em;
+	margin-right: 2.5em;
 }
 
 #menu #provider-container #provider-box{
-	margin-left: 2em;
+	margin-left: auto;
+    margin-right: auto;
 	margin-bottom: 3em;
 }
 
 #menu #provider-container .provider[data-which='idea'] img {
-	width: 130px;
-	padding-bottom: 10px;
+	width: 8.3em;
+	padding-bottom: 0.5em;
 }
 
 #menu #provider-container .provider[data-which='reliance'] img {
-	width: 170px;
-	padding-bottom: 30px;
+	width: 10.5em;
+	padding-bottom: 1.5em;
+    /*padding-top: 0.5em;*/
 }
 
 #menu .menu-title {
@@ -93,38 +115,42 @@ select {
     appearance:none;
     cursor:pointer;
     font-weight: 300;
+    font-size: 1.3em;
     padding-left: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 #telecom-box {
 	margin-top: 1em;
-	width: 460px;
+	width: 22.5em;
 	height: auto;
     overflow: hidden;
 	background: url(../img/arrow-01.png) no-repeat right white;
     text-align: left;
     padding-left: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #budget-box {
-    margin-left: 41%;
-    margin-top: 1em;
-    width: 300px;
-    padding-left: 20px;
+    margin-top: 1.5em;
+    width: 17em;
+    padding-left: 0.6em;
     height: auto;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
     background: url(../img/arrow-01.png) no-repeat right white;
 
 }
 
 #budget-box select{
-    width: 300px;
+    width: 16em;
 }
 
 option{
-    width: 460px;
+    width: 18em;
     padding: 8px;
 }
 
@@ -182,19 +208,50 @@ option{
 }
 
 #submit-button {
-    margin-top: 70px;
-    margin-left: 41.5%;
+    margin-top: 3em;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     background-color: #666666; 
     border-radius: 5px;
-    width: 280px;
-    height: 80px;
+    width: 10em;
+    height: 3.3em;
     color: white;
-    padding: 25px;
+    padding: 0.7em;
 }
 
+#content .bar{
+    width: 18em;
+    height: 2.5em;
+    background-color: #ccc;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    z-index: -1000;
+    position: relative;
+}
+
+#content .bar .completed-progress{
+    width: 0%;
+    height: 2.5em;
+    background-color: green;
+    z-index: 1000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: all .2s ease-in-out; 
+}
+
+#content .bar p{
+   font-size: 1em;
+   line-height: 0.2em;
+   z-index: 2000;
+   position: absolute;
+}
+
+
 #submit-button p{
-        font-size: 30px;
+    font-size: 1.5em;
 }
 
 #submit-button:hover {
@@ -205,7 +262,7 @@ option{
 .world{
     width: 40%;
     display: inline-block;
-    line-height: 70px;
+    line-height: 3em;
     vertical-align: top;
 }
 
@@ -235,14 +292,16 @@ option{
 }
 
 #telecom-map {
-    width: 500px;
+    margin-top: 2em;
+    width: 26.5em;
     height: auto;
-    vertical-align: -50px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.telecom-divs{
+/*.telecom-divs{
     display: inline-block;
-}
+}*/
 
 /*path {
     border-width: 5px;
@@ -299,31 +358,26 @@ g path {
 }
 
 #content .ui-state-default, #content .ui-widget-content .ui-state-default, #content .ui-widget-header .ui-state-default {
-  border: none;
-  background: none; 
-  font-weight: normal;
-  background-color: #C1272D;
-  border-radius: 50%;
-  vertical-align: -30px;
+    border: none;
+    background: none; 
+    font-weight: normal;
+    background-color: #C1272D;
+    border-radius: 50%;
+    vertical-align: -30px;
 }
 
 #content .ui-state-default, #content .ui-widget-content .ui-state-default, #content .ui-widget-header .ui-state-default {
-  border: none;
-  background: none; 
-  font-weight: normal;
-  cursor:pointer;
-  border-radius: 50%;
-  vertical-align: -30px;
-  transition: all .2s ease-in-out; 
-  transform: scale(0.8);
-}
-
-#content #no-nn .ui-state-default, #content #no-nn .ui-widget-content .ui-state-default, #content #no-nn .ui-widget-header .ui-state-default {
-  background-color: #C1272D;
-}
-
-#content #yes-nn .ui-state-default, #content #yes-nn .ui-widget-content #yes-nn .ui-state-default, #content #yes-nn .ui-widget-header .ui-state-default {
-  background-color: #23842C;
+    border: none;
+    background: none; 
+    font-weight: normal;
+    cursor:pointer;
+    border-radius: 50%;
+    vertical-align: -30px;
+    transition: all .2s ease-in-out; 
+    transform: scale(0.8);
+    background-color: white;
+    border-style: solid;
+    border-color: black;
 }
 
 #content .ui-state-default:hover, #content .ui-widget-content .ui-state-default:hover, #content .ui-widget-header .ui-state-default:hover { 
@@ -335,25 +389,27 @@ g path {
     vertical-align: -30px;
 }
 
-#content .world .world-title h2{
-    font-size: 1.5em;
+#content .world-title h2{
+    font-size: 1.8em;
     font-weight: 500;
-    padding-bottom: 1.5em;
+    color: black;
+    border-style: solid;
+    border-color: white;
+    padding-bottom: 0.8em;
 }
 
-#content #yes-nn .world-title h2{
-    color: #23842C
-}
-
-#content #no-nn .world-title h2{
-    color: #C1272D
+#content .world-title{
+    padding-bottom: 2em;
 }
 
 #content .ui-widget-content {
     border: none; 
     background: none;
-    color: #222;
     background-color: #ccc;
+}
+
+#content .ui-widget-content {
+    background-color: black;
 }
 
 .scenario {

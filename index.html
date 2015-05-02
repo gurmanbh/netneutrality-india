@@ -13,20 +13,21 @@
 </head>
 <body>
 	<div id = "canvas">
+		<div id = "headline">
+			<h1>Are content specific telecom packs effective?</h1>
+		</div>
 		<div id = "menu">
-			<div id = "circle">
-				<div class = "telecom-divs">
-					<div class = "menu-title">
-						<h1>Choose your telecom circle</h1>
-					</div>
-					<div id = 'telecom-box'>
-						<select id = 'telecom-selector'>
-						  <option id='error' value = 'null'>Select a circle</option>
-						</select>
-					</div>
+			<div id = "circle" class="menu-block">
+				<div class = "menu-title">
+					<h1>Choose your telecom circle</h1>
+				</div>
+				<div id = 'telecom-box'>
+					<select id = 'telecom-selector'>
+					  <option id='error' value = 'null'>Select a circle</option>
+					</select>
 				</div>
 
-				<div id = "telecom-map" class = "telecom-divs">
+				<div id = "telecom-map">
 					<?xml version="1.0" encoding="utf-8"?>
 					<!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 					<svg version="1.1" id="india-map" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -6527,7 +6528,7 @@
 				</div>
 			</div>
 
-			<div id = "provider-container">
+			<div id = "provider-container" class="menu-block">
 				<div class = "menu-title">
 					<h1>Choose a telecom provider</h1>
 				</div>
@@ -6539,7 +6540,7 @@
 				</div>
 			</div>
 
-			<div id = "budget">
+			<div id = "budget" class="menu-block">
 				<div class = "menu-title">
 					<h1>Choose your weekly budget for mobile Internet</h1>
 				</div>
@@ -6558,10 +6559,14 @@
 			<div id = "no-nn" class = "world">
 				<div class = "world-title">
 					<h2>In a selective Universe</h2>
+						<div class="bar">
+							<p>100% data available</p>
+							<div class = "completed-progress"></div>
+						</div>			
 				</div>
+
 				<div id = "sc-type">
-					<div class="sc-button" id ="fb">Facebook</div>
-					<div class="sc-button" id ="wa">WhatsApp</div>
+					
 				</div>
 				<div class = "scenario-box">
 					<div id = "sc-1" class "scenario">
@@ -6575,6 +6580,10 @@
 			<div id = "yes-nn" class = "world">
 				<div class = "world-title">
 					<h2>In a net neutral world</h2>
+						<div class="bar">
+							<div class = "completed-progress"></div>
+							<p>100% data available</p>
+						</div>
 				</div>
 				<div class="scenario-box"></div>
 				<div class="scenario-more"></div>
@@ -6601,10 +6610,17 @@
 		</div>
 	</script>
 
+	<script type="text/jst" id = 'nn-button-template'>
+		<div class="sc-button" id ="<%=name_key=>"><%=name=>
+		</div>
+	</script>
+
 	<script type="text/javascript" src="js/thirdparty/d3.v3.min.js"></script>
 	<script type="text/javascript" src="js/thirdparty/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="js/thirdparty/underscore-min.js"></script>
 	<script type="text/javascript" src="js/thirdparty/jquery-ui.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript" src="js/thirdparty/backbone-min.js"></script>
+	<script type="text/javascript" src="js/main-test.js"></script>
+
 </body>
 </html>
