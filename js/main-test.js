@@ -30,14 +30,16 @@
 			used:0,
 			left:0,
 			percentage_used:0,
-			percentage_left:0
+			percentage_left:0,
+			maxed_out: 'no'
 		},
 
 		no_nn:{total: 0,
 			used:0,
 			left:0,
 			percentage_used:0,
-			percentage_left:0
+			percentage_left:0,
+			maxed_out: 'no'
 		}
 	}
 
@@ -107,7 +109,7 @@
 		desc:'WhatsApp text messages',
 		unit:0.001,
 		breaks:0,
-		maxed_out:'no'
+		current_number:0
 		}
 
 	var scenarios = [
@@ -119,7 +121,7 @@
 		desc:'WeChat/Hike/WhatsApp text messages',
 		unit:0.001,
 		breaks:0,
-		maxed_out:'no',
+		current_number:0,
 		data_used:0
 		},
 
@@ -130,7 +132,7 @@
 		desc:'minutes of YouTube/Vimeo video',
 		unit:4,
 		breaks:0,
-		maxed_out:'no',
+		current_number:0,
 		data_used:0
 		},
 
@@ -141,7 +143,7 @@
 		desc:'minutes of Gaana/Saavn music',
 		unit:0.65,
 		breaks:0,
-		maxed_out:'no',
+		current_number:0,
 		data_used:0
 		},
 
@@ -152,7 +154,7 @@
 		desc:'text emails',
 		unit:0.01,
 		breaks:0,
-		maxed_out:'no',
+		current_number:0,
 		data_used:0
 		},
 		
@@ -163,7 +165,7 @@
 		desc:'minutes of navigation',
 		unit:2.5,
 		breaks:0,
-		maxed_out:'no',
+		current_number:0,
 		data_used:0
 		}
 
@@ -240,7 +242,7 @@
 	function calculateuseddata() {
 		slider_totals.yes_nn.used = d3.sum(scenarios, function(d) { return d.data_used; });
 		slider_totals.yes_nn.left = slider_totals.yes_nn.total - slider_totals.yes_nn.used;
-		slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100
+		slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100;
 		console.log('calculateuseddata looks like this', slider_totals.yes_nn.used)
 		$('#content #yes-nn .completed-progress').css({width:(slider_totals.yes_nn.percentage_used)+'%'})
 		$('#content #yes-nn .bar p').html(helper_functions.rndnumber(slider_totals.yes_nn.percentage_used)+'% data used')
@@ -368,14 +370,26 @@
 				scenarios.forEach(function(scene){
 					_.extend(scene, helper_functions);
 					$('#yes-nn .scenario-box').append(scenario_TF(scene));
-					$("#slider-"+scene.scenario_name).slider({value:scene.figure, min: scene.min, max: scene.max, step: scene.breaks, slide: function( event, ui ){
-							var round = helper_functions.rndnumber(ui.value);
-			       	 		$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
-			       	 		scene.data_used=ui.value * scene.unit;
-		       	 			calculateuseddata();
+					$("#slider-"+scene.scenario_name).slider({value:scene.figure, 
+						min: scene.min, 
+						max: scene.max, 
+						step: scene.breaks, 
+
+						slide: function(event, ui){
+							
 		       	 			if(slider_totals.yes_nn.percentage_used > 100){
-	                       		slider_totals.yes_nn.percentage_used = 100;
-	                       		$('.valueslider').addClass('stop-slider');
+	                       		// $("#slider-"+scene.scenario_name).slider('value',scene.current_number);
+		       	 				return false;
+		       	 				slider_totals.yes_nn.percentage_used = 100;
+                     		}
+
+                     		else {
+				       	 		scene.current_number = ui.value;
+				       	 		console.log('this is the current no.', scene.current_number)
+                     			var round = helper_functions.rndnumber(scene.current_number);
+				       	 		$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
+				       	 		scene.data_used = scene.current_number * scene.unit;
+			       	 			calculateuseddata();
                      		}
 		       	 		}
 		    		});
