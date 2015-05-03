@@ -7,7 +7,7 @@
 }
 
 #sc-type h2{
-    line-height: 1em; 
+    line-height: 1.4em; 
     font-size: 1.2em;
     font-weight: 300;
 }
@@ -229,7 +229,7 @@ option{
 #content .bar{
     width: 18em;
     height: 2.5em;
-    background-color: #ccc;
+    background-color: #36BF4D;
     margin-left: auto;
     margin-right: auto;
     padding: 1em;
@@ -240,7 +240,7 @@ option{
 #content .bar .completed-progress{
     width: 0%;
     height: 2.5em;
-    background-color: green;
+    background-color: #E23743;
     z-index: 1000;
     position: absolute;
     left: 0;

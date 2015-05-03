@@ -72,7 +72,7 @@
 	// define some cool numbers here
 
 	var number_of_days = 7;
-	var number_of_breaks = 8;
+	var number_of_breaks = 10;
 
 	// imp functions that we use again and again
 
@@ -86,6 +86,15 @@
 
 	function getcircle(){
 		return $('#telecom-selector').val();
+	}
+
+	function gettypes(plans){
+		var type_list = _.chain(plans)
+						.pluck('typelist')
+						.uniq()
+						.sort()
+						.value();
+		console.log(typelist);
 	}
 
 	// define the scenarios
@@ -209,12 +218,6 @@
 		});
 	}
 
-	// function to calculate total used data
-
-	function calculateuseddata() {
-		slider_totals.yes_nn.total = d3.sum(scenarios, function(d) { return d.data_used; });
-		console.log('calculateuseddata looks like this', slider_totals.yes_nn.total)
-	}
 
 	// define helper functions here
 	var helper_functions = {
@@ -230,6 +233,17 @@
 			return value | 0
 		}
 	};
+
+	// function to calculate total used data
+
+	function calculateuseddata() {
+		slider_totals.yes_nn.used = d3.sum(scenarios, function(d) { return d.data_used; });
+		slider_totals.yes_nn.left = slider_totals.yes_nn.total - slider_totals.yes_nn.used;
+		slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100
+		console.log('calculateuseddata looks like this', slider_totals.yes_nn.used)
+		$('#content #yes-nn .completed-progress').css({width:(slider_totals.yes_nn.percentage_used)+'%'})
+		$('#content #yes-nn .bar p').html(helper_functions.rndnumber(slider_totals.yes_nn.percentage_used)+'% data used')
+	}
 
 	// define budget list here
 	var budgetlist = [5,10,20,25,50,75,100,150,200];
@@ -322,9 +336,18 @@
 
 				impmath();
 
+				// check for no data. append buttons otherwise
+
 				if (slider_totals.no_nn.total === 'nodata'){
-					$('#sc-type').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone</h2>')
+					$('#sc-type').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone.</h2>')
+				} else {
+
+					state_objs.forEach(function(state){
+					_.extend(state, helper_functions);
+					$('#telecom-selector').append(telecomList_TF(state));
+					});
 				}
+
 
 				// function to hook up with backbone
 
@@ -338,7 +361,12 @@
 							var round = helper_functions.rndnumber(ui.value);
 			       	 		$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
 			       	 		scene.data_used=ui.value * scene.unit;
-		       	 			// calculateuseddata();
+		       	 			calculateuseddata();
+		       	 			if(slider_totals.yes_nn.percentage_used > 100){
+	                       		slider_totals.yes_nn.percentage_used = 100;
+	                       		 //otherwise, it's stuck at 301
+	                       		return false;
+                     		}
 		       	 		}
 		    		});
 				});
