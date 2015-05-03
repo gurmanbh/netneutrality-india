@@ -91,10 +91,11 @@
 	function gettypes(plans){
 		var type_list = _.chain(plans)
 						.pluck('typelist')
+						.flatten()
 						.uniq()
 						.sort()
 						.value();
-		console.log(typelist);
+		return(type_list);
 	}
 
 	// define the scenarios
@@ -199,7 +200,7 @@
         		});
         		return checked
     		});
-	return(result);
+		return(result);
 	}
 
 	// define the cooler math function that defines useful data here
@@ -311,7 +312,7 @@
 
 			else {
 			
-				$('.scenario-box').html('')
+				$('.scenario-box, #sc-type').html('')
 				$('#content').addClass('show');
 
 				// calculate costs
@@ -336,25 +337,35 @@
 
 				impmath();
 
+				var nntypes = gettypes(nonndata);
+				console.log(nntypes)
+
+
+
 				// check for no data. append buttons otherwise
+
+				var facebook_html = '<div class = "sc-box-type"><img src="img/fb-crop.gif"><h3>This provider has plans with Unlimited Facebook access in this region. New alternatives to Facebook suffer because of it though.</h3></div>'
 
 				if (slider_totals.no_nn.total === 'nodata'){
 					$('#sc-type').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone.</h2>')
 				} else {
-
-					state_objs.forEach(function(state){
-					_.extend(state, helper_functions);
-					$('#telecom-selector').append(telecomList_TF(state));
-					});
+					if (_.contains(nntypes, 'FB')) {
+							$('#sc-type').append('Facebook')
+						}
+					if (_.contains(nntypes, 'Unlimited-FB')) {
+							$('#no-nn .scenario-box').append(facebook_html)
+						} 
+					if (_.contains(nntypes, 'WA') || _.contains(nntypes, 'Unlimited-WA')){
+							$('#sc-type').append('WhatsApp')
+						}
+					if (_.contains(nntypes, 'Unlimited-TW')){
+							$('#sc-type').append('Twitter')
+						}
 				}
-
-
-				// function to hook up with backbone
 
 				//bake out scenarios here
 
 				scenarios.forEach(function(scene){
-					// console.log(scene)
 					_.extend(scene, helper_functions);
 					$('#yes-nn .scenario-box').append(scenario_TF(scene));
 					$("#slider-"+scene.scenario_name).slider({value:scene.figure, min: scene.min, max: scene.max, step: scene.breaks, slide: function( event, ui ){
@@ -364,7 +375,6 @@
 		       	 			calculateuseddata();
 		       	 			if(slider_totals.yes_nn.percentage_used > 100){
 	                       		slider_totals.yes_nn.percentage_used = 100;
-	                       		 //otherwise, it's stuck at 301
 	                       		return false;
                      		}
 		       	 		}

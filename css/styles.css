@@ -272,6 +272,12 @@ option{
     vertical-align: top;
 }
 
+.sc-box-type{
+    padding-left: 3em;
+    padding-right:3em;
+    color: #666;
+}
+
 #content{
     text-align: center;
     padding-top: 3em;
@@ -342,6 +348,17 @@ option{
     /*remove the things below. at present they don't work in Chrome*/
     stroke-width:2px;
     stroke: #E23743;
+}
+
+#no-nn .scenario-box img{
+    width: 16em;
+    height: auto;
+}
+
+.scenario-box h3{
+    padding: 1em;
+    font-size: 1em;
+    line-height: 1.3em;
 }
 
 g:hover * {
