@@ -376,6 +376,10 @@ g path {
     stroke: #454546;
 }
 
+#content .stop-slider{
+    pointer-events: none;
+}
+
 .ui-slider-horizontal.ui-state-default {
     border-radius: 50%;
 }

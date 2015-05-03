@@ -375,7 +375,7 @@
 		       	 			calculateuseddata();
 		       	 			if(slider_totals.yes_nn.percentage_used > 100){
 	                       		slider_totals.yes_nn.percentage_used = 100;
-	                       		return false;
+	                       		$('.valueslider').addClass('stop-slider');
                      		}
 		       	 		}
 		    		});
