@@ -1487,18 +1487,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Airtel",
-  //   "total_data": 1000,
-  //   "validity": 28,
-  //   "cost": 149,
-  //   "type": "Internet",
-  //   "internet": 1000,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Airtel",
+    "total_data": 1000,
+    "validity": 28,
+    "cost": 149,
+    "type": "Internet",
+    "internet": 1000,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Gujarat",
@@ -1619,18 +1619,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Airtel",
-  //   "total_data": 650,
-  //   "validity": 21,
-  //   "cost": 126,
-  //   "type": "Internet",
-  //   "internet": 650,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Airtel",
+    "total_data": 650,
+    "validity": 21,
+    "cost": 126,
+    "type": "Internet",
+    "internet": 650,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Tamil Nadu",
@@ -1979,18 +1979,18 @@
     "facebook": "unlimited",
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Reliance",
-  //   "total_data": 650,
-  //   "validity": 21,
-  //   "cost": 99,
-  //   "type": "Internet",
-  //   "internet": 650,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Reliance",
+    "total_data": 650,
+    "validity": 21,
+    "cost": 99,
+    "type": "Internet",
+    "internet": 650,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Gujarat",
@@ -2219,18 +2219,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Airtel",
-  //   "total_data": 500,
-  //   "validity": 14,
-  //   "cost": 98,
-  //   "type": "Internet",
-  //   "internet": 500,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Airtel",
+    "total_data": 500,
+    "validity": 14,
+    "cost": 98,
+    "type": "Internet",
+    "internet": 500,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Delhi NCR",
@@ -3827,18 +3827,18 @@
     "facebook": "unlimited",
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Airtel",
-  //   "total_data": 225,
-  //   "validity": 7,
-  //   "cost": 44,
-  //   "type": "Internet",
-  //   "internet": 225,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Airtel",
+    "total_data": 225,
+    "validity": 7,
+    "cost": 44,
+    "type": "Internet",
+    "internet": 225,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Tamil Nadu",
@@ -3911,18 +3911,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Reliance",
-  //   "total_data": 1000,
-  //   "validity": 21,
-  //   "cost": 63,
-  //   "type": "Internet",
-  //   "internet": 1000,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Reliance",
+    "total_data": 1000,
+    "validity": 21,
+    "cost": 63,
+    "type": "Internet",
+    "internet": 1000,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": "unlimited",
     "state": "Tamil Nadu",
@@ -4115,18 +4115,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Reliance",
-  //   "total_data": 500,
-  //   "validity": 10,
-  //   "cost": 51,
-  //   "type": "Internet",
-  //   "internet": 500,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Reliance",
+    "total_data": 500,
+    "validity": 10,
+    "cost": 51,
+    "type": "Internet",
+    "internet": 500,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": "unlimited",
     "state": "Haryana",
@@ -4187,18 +4187,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Reliance",
-  //   "total_data": 200,
-  //   "validity": 7,
-  //   "cost": 29,
-  //   "type": "Internet",
-  //   "internet": 200,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Reliance",
+    "total_data": 200,
+    "validity": 7,
+    "cost": 29,
+    "type": "Internet",
+    "internet": 200,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Kerala",
@@ -4607,18 +4607,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Airtel",
-  //   "total_data": 125,
-  //   "validity": 4,
-  //   "cost": 25,
-  //   "type": "Internet",
-  //   "internet": 125,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Airtel",
+    "total_data": 125,
+    "validity": 4,
+    "cost": 25,
+    "type": "Internet",
+    "internet": 125,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Haryana",
@@ -5051,18 +5051,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Airtel",
-  //   "total_data": 85,
-  //   "validity": 3,
-  //   "cost": 17,
-  //   "type": "Internet",
-  //   "internet": 85,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Airtel",
+    "total_data": 85,
+    "validity": 3,
+    "cost": 17,
+    "type": "Internet",
+    "internet": 85,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Madhya Pradesh/Chhattisgarh",
@@ -5555,18 +5555,18 @@
     "facebook": null,
     "whatsapp": null
   },
-  // {
-  //   "twitter": null,
-  //   "state": "Chennai",
-  //   "operator": "Reliance",
-  //   "total_data": 100,
-  //   "validity": 3,
-  //   "cost": 14,
-  //   "type": "Internet",
-  //   "internet": 100,
-  //   "facebook": null,
-  //   "whatsapp": null
-  // },
+  {
+    "twitter": null,
+    "state": "Chennai",
+    "operator": "Reliance",
+    "total_data": 100,
+    "validity": 3,
+    "cost": 14,
+    "type": "Internet",
+    "internet": 100,
+    "facebook": null,
+    "whatsapp": null
+  },
   {
     "twitter": null,
     "state": "Gujarat",

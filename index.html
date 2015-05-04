@@ -6562,11 +6562,7 @@
 		<div id = "content">
 			<div id = "no-nn" class = "world">
 				<div class = "world-title">
-					<h2>In a selective Universe</h2>
-						<div class="bar">
-							<p>All of your data is available</p>
-							<div class = "completed-progress"></div>
-						</div>			
+					<h2>In a selective Universe</h2>			
 				</div>
 				
 				<div class = "scenario-box">
@@ -6608,6 +6604,13 @@
 			<div class = "figure"><%= addComma(figure) %></div>
 			<div class = "desc"><%= desc %></div>
 			<div id="slider-<%= scenario_name %>" data-which="<%= scenario_name %>" data-used = 0 data-value = 0 data-print = 0 class = 'valueslider'></div>
+		</div>
+	</script>
+
+	<script type="text/jst" id ="nn-scenario-template">
+		<div id = "<%= scenario_name %>" class = "scenario">
+			<div class = "figure"><%= addComma(figure) %></div>
+			<div class = "desc"><%= desc %></div>
 		</div>
 	</script>
 

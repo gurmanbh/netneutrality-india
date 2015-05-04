@@ -11,6 +11,9 @@
 	var scenario_Html = $('#scenario-template').html();
 	var scenario_TF = _.template(scenario_Html);
 
+	var non_neutral_scenario_Html = $('#nn-scenario-template').html();
+	var non_neutral_scenario_TF = _.template(non_neutral_scenario_Html);
+
 	// keeps track of the items submitted via the menu
 
 	var menu_status = {
@@ -102,7 +105,7 @@
 
 	// define the scenarios
 
-	var non_netneutral = {scenario_name:'text',
+	var non_netneutral = [{scenario_name:'wa',
 		figure:0,
 		min:0,
 		max:0,
@@ -110,7 +113,17 @@
 		unit:0.001,
 		breaks:200,
 		current_number:0
-		}
+		},
+
+		{scenario_name:'fb',
+		figure:0,
+		min:0,
+		max:0,
+		desc:'times of checking your Facebook feed',
+		unit:0.02,
+		breaks:50,
+		current_number:0
+		}]
 
 	var scenarios = [
 
@@ -382,7 +395,6 @@
 
 				if (slider_totals.no_nn.total === 'nodata'){
 					$('#no-nn .scenario-box').html('<h2>In this budget, this operator has a net neutral space in this area. There are no violations.</h2>')
-					$('#no-nn .bar').css({display:'none'})
 				} else {
 					if (_.contains(nntypes, 'FB')) {
 							$('#no-nn .scenario-box').append('Facebook')
@@ -449,16 +461,11 @@
 					});
 
 				// non-neutral math here
-
-				non_netneutral.max = slider_totals.no_nn.total/non_netneutral.unit;
-				non_netneutral.breaks = non_netneutral.max/number_of_breaks;
-			
-				$( "#slider1" ).slider({value:0, min: 0, max: non_netneutral.max, step: non_netneutral.breaks , slide: function( event, ui ) {
-					var round = helper_functions.rndnumber(ui.value);
-		       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma(round)
-		       	 	);}
-		    	});
-				}else{
+				non_netneutral.forEach(function(obj){
+					obj.max = obj.total/obj.unit;
+				})
+				
+				}	else{
 				var error = '<h3 class=noplans>This provider does not have any plans within your budget. Increase your budget or try another operator.</h3>';
 				$('.scenario-box').append(error);
 				$('.bar').css({display:'none'})
