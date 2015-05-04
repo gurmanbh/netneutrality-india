@@ -1,8 +1,0 @@
-<h1>HTML Slider Test</h1>
-
-<div class="slider" data-which="1"></div>
-<div class="slider" data-which="2"></div>
-
-<div id="current"></div>
-<div id="slider-1-out" class="output">0</div>
-<div id="slider-2-out" class="output">0</div>
