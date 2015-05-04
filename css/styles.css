@@ -2,7 +2,7 @@
 	-web-kit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	font-family: Roboto;
+	font-family: 'Roboto', 'Helvetica';
 	margin: 0;
 }
 
@@ -28,14 +28,39 @@
 
 #headline {
     background-color: #666666;
+    padding: 4em;
 }
 
 #headline h1{
-    font-size: 2.5em;
+    font-size: 2.2em;
     color: #E6E6E6;
     font-weight: 400;
     text-align: center;
-    padding: 2em;
+   
+}
+
+#headline h2{
+    font-size: 1.5em;
+    color: #E6E6E6;
+    font-weight: 200;
+    text-align: center;
+    padding: 1em;
+    font-style: italic;
+}
+
+#headline #description {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2em;
+}
+
+#headline #description p {
+    font-size: 1.1em;
+    line-height: 1.7em;
+    color: white;
+    font-weight: 100;
+    text-align: center;
+    padding-top: 1em;
 }
 
 .sc-button {
@@ -291,6 +316,10 @@ option{
 
 .world .figure {
     font-size: 60px;
+}
+
+.noplans{ 
+    color:#E23743;
 }
 
 #yes-nn{

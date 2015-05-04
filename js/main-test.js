@@ -11,9 +11,6 @@
 	var scenario_Html = $('#scenario-template').html();
 	var scenario_TF = _.template(scenario_Html);
 
-	var nn_buttons_Html = $('#nn-button-template').html();
-	var nn_buttons_TF = _.template(nn_buttons_Html);
-
 	// keeps track of the items submitted via the menu
 
 	var menu_status = {
@@ -32,7 +29,9 @@
 			percentage_used:0,
 			percentage_left:0,
 			maxed_out: 'no'
-		},
+		}
+
+		,
 
 		no_nn:{total: 0,
 			used:0,
@@ -74,7 +73,7 @@
 	// define some cool numbers here
 
 	var number_of_days = 7;
-	var number_of_breaks = 18;
+	var number_of_breaks = 25;
 	var percent = 100;
 
 	// imp functions that we use again and again
@@ -109,7 +108,7 @@
 		max:0,
 		desc:'WhatsApp text messages',
 		unit:0.001,
-		breaks:0,
+		breaks:200,
 		current_number:0
 		}
 
@@ -121,7 +120,7 @@
 		max:0,
 		desc:'WeChat/Hike/WhatsApp text messages',
 		unit:0.001,
-		breaks:0,
+		breaks:200,
 		current_number:0,
 		data_used:0
 		},
@@ -130,20 +129,9 @@
 		figure:0,
 		min:0,
 		max:0,
-		desc:'minutes of YouTube/Vimeo video',
+		desc:'minutes of streaming video',
 		unit:4,
-		breaks:0,
-		current_number:0,
-		data_used:0
-		},
-
-		{scenario_name:'music',
-		figure:0,
-		min:0,
-		max:0,
-		desc:'minutes of Gaana/Saavn music',
-		unit:0.65,
-		breaks:0,
+		breaks:1,
 		current_number:0,
 		data_used:0
 		},
@@ -154,21 +142,45 @@
 		max:0,
 		desc:'text emails',
 		unit:0.01,
-		breaks:0,
+		breaks:100,
 		current_number:0,
 		data_used:0
 		},
-		
-		{scenario_name:'navigation',
+
+		{scenario_name:'music',
 		figure:0,
 		min:0,
 		max:0,
-		desc:'minutes of navigation',
-		unit:2.5,
-		breaks:0,
+		desc:'minutes of streaming music',
+		unit:0.65,
+		breaks:5,
+		current_number:0,
+		data_used:0
+		},
+
+		{scenario_name:'browsing',
+		figure:0,
+		min:0,
+		max:0,
+		desc:'web pages of your choice',
+		unit:0.1,
+		breaks:100,
 		current_number:0,
 		data_used:0
 		}
+
+		// ,
+
+		// {scenario_name:'navigation',
+		// figure:0,
+		// min:0,
+		// max:0,
+		// desc:'minutes of navigation',
+		// unit:2.5,
+		// breaks:0,
+		// current_number:0,
+		// data_used:0
+		// }
 
 	];
 
@@ -180,13 +192,6 @@
 	function getmydata(plans){
 		var result = _.filter(plans, function(plan){
 	    		return plan.operatorkey === menu_status.provider && plan.statekey === menu_status.circle && plan.filtercost <= menu_status.budget;
-	    	});
-		return(result);
-	}
-
-	function getmydataold(plans){
-		var result = _.filter(plans, function(plan){
-	    		return plan.operatorkey === menu_status.provider && plan.statekey === menu_status.circle;
 	    	});
 		return(result);
 	}
@@ -224,7 +229,6 @@
 	function impmath(){
 		scenarios.forEach(function(scene){
 			scene.max = slider_totals.yes_nn.total/scene.unit;
-			scene.breaks = scene.max/number_of_breaks;
 			// console.log(scene);
 		});
 	}
@@ -352,12 +356,8 @@
 				$('#telecom-map').attr('data-selected-circle', menu_status.circle);
 
 				var gotdata = getmydata(plans);
-				var gotdataold = getmydataold(plans);
 				var indata = getInternet(gotdata);
 				var nonndata = getNonNN(gotdata);
-
-				console.log('this is new',gotdata)
-				console.log('this is old',gotdataold)
 
 				slider_totals.yes_nn.total = somemath(indata);
 
@@ -376,26 +376,24 @@
 
 				if (gotdata.length>0){
 
-
 				// check for no data. append buttons otherwise
 
-				var facebook_html = '<div class = "sc-box-type"><img src="img/fb-crop.gif"><h3>This provider has plans with Unlimited Facebook access in this region. New alternatives to Facebook suffer because of it though.</h3></div>'
+				var unlimited_html = '<div class = "sc-box-type"><h3>This provider has plans with Unlimited Facebook, Twitter and WhatsApp access in this region. New alternatives to these apps might suffer because of the same.</h3><img src="img/fb-wa-tw.gif"></div>'
 
 				if (slider_totals.no_nn.total === 'nodata'){
-					$('#no-nn .scenario-box').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone.</h2>')
+					$('#no-nn .scenario-box').html('<h2>In this budget, this operator has a net neutral space in this area. There are no violations.</h2>')
+					$('#no-nn .bar').css({display:'none'})
 				} else {
 					if (_.contains(nntypes, 'FB')) {
 							$('#no-nn .scenario-box').append('Facebook')
 						}
 					if (_.contains(nntypes, 'Unlimited-FB')) {
-							$('#no-nn .scenario-box').append(facebook_html)
+							$('#no-nn .scenario-box').append(unlimited_html)
 						} 
 					if (_.contains(nntypes, 'WA') || _.contains(nntypes, 'Unlimited-WA')){
 							$('#no-nn .scenario-box').append('WhatsApp')
 						}
-					if (_.contains(nntypes, 'Unlimited-TW')){
-							$('#no-nn .scenario-box').append('Twitter')
-						}
+					
 				}
 				//bake out scenarios here
 
@@ -461,9 +459,9 @@
 		       	 	);}
 		    	});
 				}else{
-				var error = '<h3>No plans in this budget</h3>';
-
+				var error = '<h3 class=noplans>This provider does not have any plans within your budget. Increase your budget or try another operator.</h3>';
 				$('.scenario-box').append(error);
+				$('.bar').css({display:'none'})
 				}
 			}
 				
