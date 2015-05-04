@@ -74,7 +74,7 @@
 	// define some cool numbers here
 
 	var number_of_days = 7;
-	var number_of_breaks = 8;
+	var number_of_breaks = 18;
 	var percent = 100;
 
 	// imp functions that we use again and again
@@ -179,6 +179,13 @@
 
 	function getmydata(plans){
 		var result = _.filter(plans, function(plan){
+	    		return plan.operatorkey === menu_status.provider && plan.statekey === menu_status.circle && plan.filtercost <= menu_status.budget;
+	    	});
+		return(result);
+	}
+
+	function getmydataold(plans){
+		var result = _.filter(plans, function(plan){
 	    		return plan.operatorkey === menu_status.provider && plan.statekey === menu_status.circle;
 	    	});
 		return(result);
@@ -241,15 +248,13 @@
 	// function to calculate total used data
 
 	function pushstuff() {
-	  slider_totals.yes_nn.left = slider_totals.yes_nn.total - slider_totals.yes_nn.used;
-	  slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100;
-	  if (slider_totals.yes_nn.left>=0){
+	  
+	  if (slider_totals.yes_nn.left>0){
 	 	$('#content #yes-nn .completed-progress').css({width:(slider_totals.yes_nn.percentage_used)+'%'});
-
 		$('#content #yes-nn .bar p').html(helper_functions.rndnumber(slider_totals.yes_nn.percentage_used)+'% data used');
 		} else {
 			$('#content #yes-nn .completed-progress').css({width:100+'%'});
-			$('#content #yes-nn .bar p').html('100% data used');
+			$('#content #yes-nn .bar p').html('You used all your data');
 		}
 	}
 
@@ -259,19 +264,20 @@
 	  	total += +$(this).attr('data-used') || 0;
 	  });
 	  slider_totals.yes_nn.used = total;
+	  slider_totals.yes_nn.left = slider_totals.yes_nn.total - slider_totals.yes_nn.used;
+	  slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100;
 	  pushstuff();
-	  console.log(total)
-	  return total;
+	  return slider_totals.yes_nn.percentage_used;
 	}
 
 	function printfigure (which, val){
 		var round = helper_functions.rndnumber(val);
 		$("#"+which+" .figure").html(helper_functions.addComma(round));
-	  	$('#slider-'+which).attr('data-print',val);
+	  	$('#slider-'+which).attr('data-print', val);
 	}
 
 	// define budget list here
-	var budgetlist = [5,10,20,25,50,75,100,150,200];
+	var budgetlist = [20,25,50,75,100,150,200];
 	var budget_objs = _.map(budgetlist, function(budget){ return {'budget': budget} });
 
 	// read the data in
@@ -309,9 +315,8 @@
 			plan.statekey = helper_functions.cleanlabel(plan.state);
 			plan.operatorkey = helper_functions.cleanlabel(plan.operator);
 			plan.dataperdayperrupee = (plan.total_data/plan.validity)/plan.cost;
+			plan.filtercost = plan.cost/plan.validity * number_of_days;
 			plan.typelist = plan.type.split('/');
-			// console.log(plan)
-				
 			if (!plan.typelist){
 				plan.typelist = plan.type;
 			}
@@ -336,7 +341,7 @@
 
 			else {
 			
-				$('.scenario-box, #sc-type').html('')
+				$('.scenario-box').html('')
 				$('#content').addClass('show');
 
 				// calculate costs
@@ -347,23 +352,29 @@
 				$('#telecom-map').attr('data-selected-circle', menu_status.circle);
 
 				var gotdata = getmydata(plans);
+				var gotdataold = getmydataold(plans);
 				var indata = getInternet(gotdata);
 				var nonndata = getNonNN(gotdata);
 
+				console.log('this is new',gotdata)
+				console.log('this is old',gotdataold)
+
 				slider_totals.yes_nn.total = somemath(indata);
+
+				console.log('this is your max',slider_totals.yes_nn.total)
 
 				if (nonndata.length>0){
 					slider_totals.no_nn.total = somemath (nonndata);
 				} else{
 					slider_totals.no_nn.total = 'nodata';
 				}
-				// console.log(slider_totals.no_nn.total)
 
 				impmath();
 
 				var nntypes = gettypes(nonndata);
-				// console.log(nntypes)
+				 console.log(nntypes)
 
+				if (gotdata.length>0){
 
 
 				// check for no data. append buttons otherwise
@@ -371,73 +382,73 @@
 				var facebook_html = '<div class = "sc-box-type"><img src="img/fb-crop.gif"><h3>This provider has plans with Unlimited Facebook access in this region. New alternatives to Facebook suffer because of it though.</h3></div>'
 
 				if (slider_totals.no_nn.total === 'nodata'){
-					$('#sc-type').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone.</h2>')
+					$('#no-nn .scenario-box').html('<h2>This operator has a net neutral space in this area. There are no violations in this zone.</h2>')
 				} else {
 					if (_.contains(nntypes, 'FB')) {
-							$('#sc-type').append('Facebook')
+							$('#no-nn .scenario-box').append('Facebook')
 						}
 					if (_.contains(nntypes, 'Unlimited-FB')) {
 							$('#no-nn .scenario-box').append(facebook_html)
 						} 
 					if (_.contains(nntypes, 'WA') || _.contains(nntypes, 'Unlimited-WA')){
-							$('#sc-type').append('WhatsApp')
+							$('#no-nn .scenario-box').append('WhatsApp')
 						}
 					if (_.contains(nntypes, 'Unlimited-TW')){
-							$('#sc-type').append('Twitter')
+							$('#no-nn .scenario-box').append('Twitter')
 						}
 				}
-
 				//bake out scenarios here
 
-				scenarios.forEach(function(scene){
-					_.extend(scene, helper_functions);
-					// this appends things to the dom
-					$('#yes-nn .scenario-box').append(scenario_TF(scene));
-					
-					$("#slider-"+scene.scenario_name).slider({
-						value:scene.figure, 
-						min: scene.min, 
-						max: scene.max, 
-						step: scene.breaks, 
+					scenarios.forEach(function(scene){
+						_.extend(scene, helper_functions);
+						// this appends things to the dom
+						$('#yes-nn .scenario-box').append(scenario_TF(scene));
+						
+						$("#slider-"+scene.scenario_name).slider({
+							value:scene.figure, 
+							min: scene.min, 
+							max: scene.max, 
+							step: scene.breaks, 
 
-						slide: function(event, ui){
-							console.log('sliding');
-							var name = $(this).attr('data-which');
-      						var obj = _.findWhere (scenarios, {scenario_name: name});
-			       	 		$(this).attr('data-value', ui.value);
-			       	 		var data = ui.value * obj.unit;
-			       	 		$(this).attr('data-used', data);
-			       	 		var total = getCombinedValues();
-			       	 		var which = $(this).attr('id');
-			       	 		// console.log('printing which now', which)
-			       	 		
-			       	 		if (total > percent) {
-          						console.log('stopped')
-          						return false;
-     						}
+							slide: function(event, ui){
+								console.log('sliding');
+								var name = $(this).attr('data-which');
+	      						var obj = _.findWhere (scenarios, {scenario_name: name});
+				       	 		$(this).attr('data-value', ui.value);
+				       	 		var data = ui.value * obj.unit;
+				       	 		$(this).attr('data-used', data);
+				       	 		var total = getCombinedValues();
+				       	 		console.log(total)
+				       	 		var which = $(this).attr('id');
+				       	 		// console.log('printing which now', which)
+				       	 		
+				       	 		if (total > percent) {
+	          						console.log('stopped')
+	          						return false;
+	     						}
 
-     						printfigure(name, ui.value);
+	     						printfigure(name, ui.value);
 
-     						},
+	     						},
 
-		       	 		start: function(event,ui){
-		       	 			var total = getCombinedValues();
-      						var which = $(this).attr('id');
-      						var name = $(this).attr('data-which');
-      						var obj = _.findWhere (scenarios, {scenario_name: name});
-      						var val = $(this).attr('data-print');
-      						console.log(val);
-      						if (total > percent && val>0) {
-      							$(this).slider('value', ui.value - obj.breaks);
-	                     		$(this).attr('data-value', ui.value - obj.breaks);
-	                     		$(this).attr('data-used', ui.value * obj.unit);
-	          					printfigure(name, ui.value - obj.breaks);
-      						} else if (total > percent && val == 0){
-      							return false;	
-      						}
-		       	 		}
-		    		});
-				});
+			       	 		start: function(event,ui){
+			       	 			var total = getCombinedValues();
+	      						var which = $(this).attr('id');
+	      						var name = $(this).attr('data-which');
+	      						var obj = _.findWhere (scenarios, {scenario_name: name});
+	      						var val = $(this).attr('data-print');
+	      						console.log(val);
+	      						if (total > percent && val>0) {
+	      							$(this).slider('value', ui.value - obj.breaks);
+		                     		$(this).attr('data-value', ui.value - obj.breaks);
+		                     		$(this).attr('data-used', ui.value * obj.unit);
+		          					printfigure(name, ui.value - obj.breaks);
+	      						} else if (total > percent && val == 0){
+	      							return false;	
+	      						}
+		       	 			}
+		    			});
+					});
 
 				// non-neutral math here
 
@@ -446,9 +457,14 @@
 			
 				$( "#slider1" ).slider({value:0, min: 0, max: non_netneutral.max, step: non_netneutral.breaks , slide: function( event, ui ) {
 					var round = helper_functions.rndnumber(ui.value);
-		       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma(round));}
+		       	 	$( "#sc-1 .figure" ).html(helper_functions.addComma(round)
+		       	 	);}
 		    	});
+				}else{
+				var error = '<h3>No plans in this budget</h3>';
 
+				$('.scenario-box').append(error);
+				}
 			}
 				
 		});
