@@ -31,6 +31,12 @@
     padding: 4em;
 }
 
+#comment {
+    background-color: #666666;
+    padding: 4em;
+    display:none;
+}
+
 #headline h1{
     font-size: 2.2em;
     color: #E6E6E6;
@@ -252,7 +258,7 @@ option{
 }
 
 #content .bar{
-    width: 18em;
+    width: 20em;
     height: 2.5em;
     background-color: #36BF4D;
     margin-left: auto;
@@ -308,12 +314,41 @@ option{
     padding-top: 3em;
     padding-bottom: 3em;
     display: none;
+    transition: all .2s ease-in-out; 
 }
 
 #content.show{
     display: block;
 }
+#comment.show{
+    display: block;
+}
+/*
+#comment h1{
+    padding-bottom: 1em;    
+}*/
+#comment p{
+    padding-top: 1em;    
+}
 
+#comment {
+    font-size: 1.1em;
+    color: #E6E6E6;
+    line-height: 1.5em;
+    font-weight: 200;
+}
+
+#comment a:hover{
+    color: #F84D69;
+}
+
+h2.noplans{
+    padding-right: 2em;
+}
+
+#comment a{
+    color: inherit;
+}
 .world .figure {
     font-size: 60px;
 }

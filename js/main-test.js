@@ -106,6 +106,7 @@
 	// define the scenarios
 
 	var non_netneutral = [{scenario_name:'wa',
+		total_data:0,		
 		figure:0,
 		min:0,
 		max:0,
@@ -116,11 +117,12 @@
 		},
 
 		{scenario_name:'fb',
+		total_data:0,
 		figure:0,
 		min:0,
 		max:0,
 		desc:'times of checking your Facebook feed',
-		unit:0.02,
+		unit:0.01,
 		breaks:50,
 		current_number:0
 		}]
@@ -343,6 +345,7 @@
 		// things that happen after the submit button is clicked
 		
 		$('#submit-button').on('click',function(){
+			$('.bar').css({display:'block'})
 
 			// first feed in the form data to the menu object
 
@@ -359,6 +362,7 @@
 			else {
 			
 				$('.scenario-box').html('')
+				$('.comment-box').html('')
 				$('#content').addClass('show');
 
 				// calculate costs
@@ -372,9 +376,9 @@
 				var indata = getInternet(gotdata);
 				var nonndata = getNonNN(gotdata);
 
-				slider_totals.yes_nn.total = somemath(indata);
+				console.log(indata)
 
-				console.log('this is your max',slider_totals.yes_nn.total)
+				slider_totals.yes_nn.total = somemath(indata);
 
 				if (nonndata.length>0){
 					slider_totals.no_nn.total = somemath (nonndata);
@@ -388,27 +392,44 @@
 				 console.log(nntypes)
 
 				if (gotdata.length>0){
+					$('#comment').addClass('show');
 
 				// check for no data. append buttons otherwise
 
-				var unlimited_html = '<div class = "sc-box-type"><h3>This provider has plans with Unlimited Facebook, Twitter and WhatsApp access in this region. New alternatives to these apps might suffer because of the same.</h3><img src="img/fb-wa-tw.gif"></div>'
+					var unlimited_html = '<div class = "sc-box-type" ><h3>This provider has plans with Unlimited Facebook, Twitter and WhatsApp access in this region. New alternatives to these apps might suffer because of the same.</h3></div>'
 
-				if (slider_totals.no_nn.total === 'nodata'){
-					$('#no-nn .scenario-box').html('<h2>In this budget, this operator has a net neutral space in this area. There are no violations.</h2>')
-				} else {
-					if (_.contains(nntypes, 'FB')) {
-							$('#no-nn .scenario-box').append('Facebook')
-						}
-					if (_.contains(nntypes, 'Unlimited-FB')) {
-							$('#no-nn .scenario-box').append(unlimited_html)
-						} 
-					if (_.contains(nntypes, 'WA') || _.contains(nntypes, 'Unlimited-WA')){
-							$('#no-nn .scenario-box').append('WhatsApp')
-						}
-					
+					if (slider_totals.no_nn.total === 'nodata'){
+						$('#no-nn .scenario-box').html('<h2 class="noplans">In this budget, this operator has a net neutral space in this area. There are no violations.</h2>')
+					} else {
+						if (_.contains(nntypes, 'FB')) {
+								var fb_list = _.where(nonndata,{type:'FB'});
+								var fb_mean = somemath(fb_list);
+								console.log('this is fb list', fb_list);
+								var gotobj = _.findWhere(non_netneutral, {scenario_name: 'fb'})
+								gotobj.total_data = fb_mean;
+								gotobj.max = gotobj.total_data * gotobj.unit;
+								_.extend(gotobj,helper_functions)
+								$('#no-nn .scenario-box').append(non_neutral_scenario_TF(gotobj)
+								);
+							}
+						if (_.contains(nntypes, 'Unlimited-FB')) {
+								$('#no-nn .scenario-box').append(unlimited_html)
+							} 
+						if (_.contains(nntypes, 'WA')){
+								var wa_list = _.where(nonndata,{type:'WA'});
+								var wa_mean = somemath(wa_list);
+								var gotobj = _.findWhere(non_netneutral, {scenario_name: 'wa'})
+								gotobj.total_data = wa_mean;
+								gotobj.max = gotobj.total_data/gotobj.unit;
+								_.extend(gotobj,helper_functions)
+								console.log(gotobj)
+								$('#no-nn .scenario-box').append(non_neutral_scenario_TF(gotobj));
+								$('#no-nn .comment-box').append('<h2 class = "noplans">And that is all you get. It is a limited world after all.</h2>')
+							}
+						
 				}
 				//bake out scenarios here
-
+				if (indata.length>0){
 					scenarios.forEach(function(scene){
 						_.extend(scene, helper_functions);
 						// this appends things to the dom
@@ -458,12 +479,13 @@
 	      						}
 		       	 			}
 		    			});
-					});
-
-				// non-neutral math here
-				non_netneutral.forEach(function(obj){
-					obj.max = obj.total/obj.unit;
-				})
+					});} else if (indata.length==0){
+				console.log('inside')
+				var error = '<h3 class=noplans>This provider does not have any plans within your budget. Increase your budget or try another operator.</h3>';
+				$('#yes-nn .scenario-box').append(error);
+				$('.bar').css({display:'none'})
+				}
+				
 				
 				}	else{
 				var error = '<h3 class=noplans>This provider does not have any plans within your budget. Increase your budget or try another operator.</h3>';
