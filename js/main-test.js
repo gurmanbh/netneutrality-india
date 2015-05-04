@@ -74,7 +74,8 @@
 	// define some cool numbers here
 
 	var number_of_days = 7;
-	var number_of_breaks = 10;
+	var number_of_breaks = 8;
+	var percent = 100;
 
 	// imp functions that we use again and again
 
@@ -239,13 +240,34 @@
 
 	// function to calculate total used data
 
-	function calculateuseddata() {
-		slider_totals.yes_nn.used = d3.sum(scenarios, function(d) { return d.data_used; });
-		slider_totals.yes_nn.left = slider_totals.yes_nn.total - slider_totals.yes_nn.used;
-		slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100;
-		console.log('calculateuseddata looks like this', slider_totals.yes_nn.used)
-		$('#content #yes-nn .completed-progress').css({width:(slider_totals.yes_nn.percentage_used)+'%'})
-		$('#content #yes-nn .bar p').html(helper_functions.rndnumber(slider_totals.yes_nn.percentage_used)+'% data used')
+	function pushstuff() {
+	  slider_totals.yes_nn.left = slider_totals.yes_nn.total - slider_totals.yes_nn.used;
+	  slider_totals.yes_nn.percentage_used = slider_totals.yes_nn.used/slider_totals.yes_nn.total*100;
+	  if (slider_totals.yes_nn.left>=0){
+	 	$('#content #yes-nn .completed-progress').css({width:(slider_totals.yes_nn.percentage_used)+'%'});
+
+		$('#content #yes-nn .bar p').html(helper_functions.rndnumber(slider_totals.yes_nn.percentage_used)+'% data used');
+		} else {
+			$('#content #yes-nn .completed-progress').css({width:100+'%'});
+			$('#content #yes-nn .bar p').html('100% data used');
+		}
+	}
+
+	function getCombinedValues(){
+	  var total = 0;
+	  $('.valueslider').each(function(){
+	  	total += +$(this).attr('data-used') || 0;
+	  });
+	  slider_totals.yes_nn.used = total;
+	  pushstuff();
+	  console.log(total)
+	  return total;
+	}
+
+	function printfigure (which, val){
+		var round = helper_functions.rndnumber(val);
+		$("#"+which+" .figure").html(helper_functions.addComma(round));
+	  	$('#slider-'+which).attr('data-print',val);
 	}
 
 	// define budget list here
@@ -335,12 +357,12 @@
 				} else{
 					slider_totals.no_nn.total = 'nodata';
 				}
-				console.log(slider_totals.no_nn.total)
+				// console.log(slider_totals.no_nn.total)
 
 				impmath();
 
 				var nntypes = gettypes(nonndata);
-				console.log(nntypes)
+				// console.log(nntypes)
 
 
 
@@ -369,28 +391,50 @@
 
 				scenarios.forEach(function(scene){
 					_.extend(scene, helper_functions);
+					// this appends things to the dom
 					$('#yes-nn .scenario-box').append(scenario_TF(scene));
-					$("#slider-"+scene.scenario_name).slider({value:scene.figure, 
+					
+					$("#slider-"+scene.scenario_name).slider({
+						value:scene.figure, 
 						min: scene.min, 
 						max: scene.max, 
 						step: scene.breaks, 
 
 						slide: function(event, ui){
-							
-		       	 			if(slider_totals.yes_nn.percentage_used > 100){
-	                       		// $("#slider-"+scene.scenario_name).slider('value',scene.current_number);
-		       	 				return false;
-		       	 				slider_totals.yes_nn.percentage_used = 100;
-                     		}
+							console.log('sliding');
+							var name = $(this).attr('data-which');
+      						var obj = _.findWhere (scenarios, {scenario_name: name});
+			       	 		$(this).attr('data-value', ui.value);
+			       	 		var data = ui.value * obj.unit;
+			       	 		$(this).attr('data-used', data);
+			       	 		var total = getCombinedValues();
+			       	 		var which = $(this).attr('id');
+			       	 		// console.log('printing which now', which)
+			       	 		
+			       	 		if (total > percent) {
+          						console.log('stopped')
+          						return false;
+     						}
 
-                     		else {
-				       	 		scene.current_number = ui.value;
-				       	 		console.log('this is the current no.', scene.current_number)
-                     			var round = helper_functions.rndnumber(scene.current_number);
-				       	 		$("#"+scene.scenario_name+" .figure").html(helper_functions.addComma(round));
-				       	 		scene.data_used = scene.current_number * scene.unit;
-			       	 			calculateuseddata();
-                     		}
+     						printfigure(name, ui.value);
+
+     						},
+
+		       	 		start: function(event,ui){
+		       	 			var total = getCombinedValues();
+      						var which = $(this).attr('id');
+      						var name = $(this).attr('data-which');
+      						var obj = _.findWhere (scenarios, {scenario_name: name});
+      						var val = $(this).attr('data-print');
+      						console.log(val);
+      						if (total > percent && val>0) {
+      							$(this).slider('value', ui.value - obj.breaks);
+	                     		$(this).attr('data-value', ui.value - obj.breaks);
+	                     		$(this).attr('data-used', ui.value * obj.unit);
+	          					printfigure(name, ui.value - obj.breaks);
+      						} else if (total > percent && val == 0){
+      							return false;	
+      						}
 		       	 		}
 		    		});
 				});
