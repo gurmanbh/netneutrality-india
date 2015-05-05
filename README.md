@@ -1,3 +1,3 @@
 # Net Neutrality in India
 
-[Click here](http://www.gurmanbh.github.io/netneutrality-india) for the project in its current form.
+[Click here](http://gurmanbh.github.io/netneutrality-india) for the project in its current form.
