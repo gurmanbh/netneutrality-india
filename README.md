@@ -1,3 +1,3 @@
 # Net Neutrality in India
 
-Under Construction
+(Click here)[www.gurmanbh.github.io/netneutrality-india] for the project in its current form.
