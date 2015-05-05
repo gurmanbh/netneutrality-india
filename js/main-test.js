@@ -122,7 +122,7 @@
 		min:0,
 		max:0,
 		desc:'times of checking your Facebook feed',
-		unit:0.01,
+		unit:0.2,
 		breaks:50,
 		current_number:0
 		}]
@@ -408,7 +408,7 @@
 								console.log('this is fb list', fb_list);
 								var gotobj = _.findWhere(non_netneutral, {scenario_name: 'fb'})
 								gotobj.total_data = fb_mean;
-								gotobj.max = gotobj.total_data * gotobj.unit;
+								gotobj.max = gotobj.total_data / gotobj.unit;
 								_.extend(gotobj,helper_functions)
 								$('#no-nn .scenario-box').append(non_neutral_scenario_TF(gotobj)
 								);
