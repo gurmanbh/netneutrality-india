@@ -298,6 +298,10 @@ option{
     cursor: pointer;
 }
 
+ul{
+    padding-top: 1em;
+}
+
 .world{
     width: 40%;
     display: inline-block;
@@ -365,9 +369,8 @@ h2.noplans{
 
 #content #yes-nn .instructions{
     font-size: 1.2em; 
-    color:#E23743;
+    color:#666666;
     line-height: 1.5em;
-
 }
 
 #yes-nn{
@@ -441,7 +444,7 @@ h2.noplans{
 }
 
 .scenario-box {
-    padding-top: 1em;
+    padding-top: 1.5em;
 }
 
 g:hover * {
