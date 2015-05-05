@@ -263,7 +263,8 @@ option{
     background-color: #36BF4D;
     margin-left: auto;
     margin-right: auto;
-    padding: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
     z-index: -1000;
     position: relative;
 }
@@ -284,6 +285,7 @@ option{
    line-height: 0.2em;
    z-index: 2000;
    position: absolute;
+   padding-left: 1em;
 }
 
 
@@ -343,7 +345,8 @@ option{
 }
 
 h2.noplans{
-    padding-right: 2em;
+    padding-left: auto;
+    padding-right: auto;
 }
 
 #comment a{
@@ -355,21 +358,27 @@ h2.noplans{
 
 .noplans{ 
     color:#E23743;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    font-weight: 400;
 }
 
 #content #yes-nn .instructions{
     font-size: 1.2em; 
     color:#E23743;
-    padding-bottom: 1em;
+    line-height: 1.5em;
+
 }
 
 #yes-nn{
    border-left: 1px solid gray;
+   padding-left: 1em;
 }
 
 .valueslider{
     width: 65%;
-    margin-left: 18%;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 1em;
 }
 
@@ -427,8 +436,12 @@ h2.noplans{
 
 .scenario-box h3{
     padding: 1em;
-    font-size: 1em;
-    line-height: 1.3em;
+    font-size: 1.2em;
+    line-height: 1.2em;
+}
+
+.scenario-box {
+    padding-top: 1em;
 }
 
 g:hover * {
@@ -512,3 +525,70 @@ g path {
 .scenario {
     margin-bottom: 2.5em;
 }
+
+@media (max-width: 673px){
+    .world{
+        width: 80%;
+        vertical-align: top;
+    }
+
+    #yes-nn{
+        padding-top: 1em;
+        margin-top: 1em;
+        border-top: 2px solid gray;
+        border-left: none;
+
+    }
+
+    #comment h1{
+        line-height: 1.5em;
+    }
+
+    #comment {
+        padding-left: 1.2em;
+        padding-right: 1.2em;
+    }
+
+    .valueslider{
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #headline #description {
+        padding-left: 1.2em;
+        padding-right: 1.2em;
+    }
+
+    #headline {
+        background-color: #666666;
+        padding-top: 3em;
+        padding-left: 0;
+        padding-right: 0;
+        padding-bottom: 3em;
+    }
+
+    #headline h1 {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+
+    #telecom-map {
+        width: 100%;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #telecom-box {
+        margin-top: 1em;
+        width: 20.5em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #content .bar {
+        width: 100%;
+    }
+}
+    
