@@ -357,6 +357,12 @@ h2.noplans{
     color:#E23743;
 }
 
+#content #yes-nn .instructions{
+    font-size: 1.2em; 
+    color:#E23743;
+    padding-bottom: 1em;
+}
+
 #yes-nn{
    border-left: 1px solid gray;
 }

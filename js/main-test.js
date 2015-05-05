@@ -363,6 +363,7 @@
 			
 				$('.scenario-box').html('')
 				$('.comment-box').html('')
+				$('.instructions').html('')
 				$('#content').addClass('show');
 
 				// calculate costs
@@ -430,6 +431,7 @@
 				}
 				//bake out scenarios here
 				if (indata.length>0){
+					$('#yes-nn .instructions').append('Adjust the sliders according to your usage')
 					scenarios.forEach(function(scene){
 						_.extend(scene, helper_functions);
 						// this appends things to the dom
