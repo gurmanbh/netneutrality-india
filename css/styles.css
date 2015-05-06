@@ -344,7 +344,7 @@ ul{
     font-weight: 200;
 }
 
-#comment a:hover{
+a:hover{
     color: #F84D69;
 }
 
@@ -353,7 +353,7 @@ h2.noplans{
     padding-right: auto;
 }
 
-#comment a{
+a{
     color: inherit;
 }
 .world .figure {
