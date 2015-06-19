@@ -255,7 +255,6 @@
 			return unclean.toLowerCase().replace(/ /g,'_').replace( /\//g ,'_');
 		},
 		addComma: function(value){
-
 			return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		},
 
@@ -346,7 +345,8 @@
 		
 		$('#submit-button').on('click',function(){
 			$('.bar').css({display:'block'})
-
+			$('#content #yes-nn .completed-progress').css({width:0});
+			$('#content #yes-nn .bar p').html('All of your data is available');
 			// first feed in the form data to the menu object
 
 			menu_status.circle = getcircle();
