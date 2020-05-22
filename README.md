@@ -1,4 +1,4 @@
-#What choices are you making when you buy mobile Internet in India?
+# What choices are you making when you buy mobile Internet in India?
 
 In India, certain telecom providers offer Facebook only and WhatsApp only packs. Using data on the cost of prepaid Internet packs offered by three of India's leading telecom providers - Airtel, Idea and Reliance, this web interactive helps users understand what they get in both cases. The idea is to help users understand the idea of consumer benefit and consumer harm.
 
